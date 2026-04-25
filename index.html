@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Journeys">
 <title>Journeys</title>
 <style>
@@ -26,33 +27,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
 .screen{display:none;flex-direction:column;height:100%;overflow:hidden;}
 .screen.active{display:flex;}
 .scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:28px;}
-.status-bar{padding:12px 20px 4px;display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--ink2);flex-shrink:0;}
-.header{padding:20px 20px 16px;flex-shrink:0;}
-.header-row{display:flex;align-items:center;justify-content:space-between;}
+.header{padding:24px 20px 14px;flex-shrink:0;}
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .header h1{font-size:30px;font-weight:700;letter-spacing:-0.5px;color:var(--ink);}
 .header p{font-size:13px;color:var(--ink3);margin-top:2px;}
-.icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:var(--shadow);}
+.header-actions{display:flex;gap:8px;}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:var(--shadow);color:var(--ink);}
 .bottom-nav{padding:10px 0 30px;background:var(--white);border-top:1px solid var(--sand2);display:flex;flex-shrink:0;}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px;color:var(--ink2);}
 .nav-icon{font-size:20px;}
 .nav-label{font-size:10px;color:var(--ink3);}
 .nav-item.nav-active .nav-label{color:var(--accent);}
 .trips-list{padding:0 16px;}
-.empty-state{text-align:center;padding:60px 20px;color:var(--ink3);}
+.empty-state{text-align:center;padding:50px 20px;color:var(--ink3);}
 .empty-state .e-icon{font-size:48px;margin-bottom:16px;}
 .empty-state h3{font-size:22px;font-weight:600;color:var(--ink2);margin-bottom:8px;}
-.empty-state p{font-size:14px;line-height:1.6;}
+.empty-state p{font-size:14px;line-height:1.6;margin-bottom:18px;}
+.empty-cta{display:flex;flex-direction:column;gap:8px;max-width:280px;margin:0 auto;}
 .trip-card{background:var(--white);border-radius:var(--radius);padding:18px;margin-bottom:14px;cursor:pointer;position:relative;overflow:hidden;box-shadow:var(--shadow);}
 .trip-card:active{opacity:0.85;}
 .trip-card-accent{position:absolute;top:0;left:0;width:4px;height:100%;}
 .trip-inner{margin-left:12px;}
-.trip-card-header{display:flex;justify-content:space-between;align-items:flex-start;}
+.trip-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
 .trip-name{font-size:19px;font-weight:700;letter-spacing:-0.3px;color:var(--ink);}
 .trip-dates{font-size:12px;color:var(--ink3);margin-top:3px;}
 .trip-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
 .badge-active{background:var(--accent-light);color:var(--accent);}
 .badge-upcoming{background:var(--sky-light);color:var(--sky);}
-.badge-past{background:#F0EEEC;color:var(--ink3);}
+.badge-past{background:var(--sand2);color:var(--ink3);}
 .trip-meta{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;}
 .trip-meta-item{font-size:12px;color:var(--ink3);}
 .trip-progress{margin-top:14px;}
@@ -60,7 +62,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
 .progress-fill{height:100%;border-radius:2px;background:var(--accent);}
 .progress-label{font-size:11px;color:var(--ink3);margin-top:5px;}
 .trip-header-detail{padding:24px 16px 8px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.back-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:var(--shadow);}
+.back-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:var(--shadow);color:var(--ink);}
 .trip-title-block{flex:1;min-width:0;}
 .trip-title-block h2{font-size:19px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .trip-title-block p{font-size:12px;color:var(--ink3);}
@@ -94,45 +96,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
 .tl-time{font-size:12px;color:var(--ink2);flex-shrink:0;text-align:right;white-space:nowrap;}
 .tl-done{display:block;font-size:10px;color:var(--ink3);margin-top:2px;}
 .tl-now-badge{display:inline-block;background:var(--accent-light);color:var(--accent);border-radius:4px;padding:1px 5px;font-size:10px;margin-top:3px;}
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(28,25,23,0.5);z-index:100;display:none;align-items:flex-end;max-width:390px;margin:0 auto;}
+.tl-attach-badge{display:inline-block;background:var(--sand2);color:var(--ink3);border-radius:4px;padding:1px 5px;font-size:10px;margin-top:3px;margin-left:3px;}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:100;display:none;align-items:flex-end;max-width:390px;margin:0 auto;}
 .modal-overlay.open{display:flex;}
-.modal-sheet{background:var(--white);border-radius:20px 20px 0 0;width:100%;padding:20px 20px 48px;max-height:90vh;overflow-y:auto;}
+.modal-sheet{background:var(--white);border-radius:20px 20px 0 0;width:100%;padding:20px 20px 48px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .modal-handle{width:36px;height:4px;background:var(--sand2);border-radius:2px;margin:0 auto 20px;}
 .modal-type{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
 .modal-title{font-size:24px;font-weight:700;letter-spacing:-0.3px;margin-bottom:16px;}
-.detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--sand);}
+.detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--sand);gap:10px;}
 .detail-row:last-of-type{border-bottom:none;}
-.detail-label{font-size:13px;color:var(--ink3);flex-shrink:0;margin-right:12px;}
+.detail-label{font-size:13px;color:var(--ink3);flex-shrink:0;}
 .detail-val{font-size:13px;font-weight:600;color:var(--ink);text-align:right;word-break:break-word;}
-.detail-val.mono{font-family:ui-monospace,monospace;font-size:13px;letter-spacing:0.03em;}
-.detail-val.blue{color:var(--sky);}
+.detail-val.mono{font-family:ui-monospace,monospace;letter-spacing:0.03em;}
+.detail-val a{color:var(--sky);text-decoration:underline;}
 .modal-divider{height:1px;background:var(--sand2);margin:16px 0;}
 .modal-actions{display:flex;flex-direction:column;gap:10px;}
 .btn-primary{background:var(--accent);color:var(--white);border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:600;width:100%;cursor:pointer;font-family:inherit;}
 .btn-secondary{background:var(--sand);color:var(--ink);border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:600;width:100%;cursor:pointer;font-family:inherit;}
 .btn-danger{background:var(--red-light);color:var(--red);border:none;border-radius:12px;padding:14px;font-size:14px;font-weight:600;width:100%;cursor:pointer;font-family:inherit;}
-.attachment-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sand);border-radius:10px;margin-top:8px;}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--sand2);border-radius:12px;padding:14px;font-size:14px;font-weight:600;width:100%;cursor:pointer;font-family:inherit;}
+.attachment-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sand);border-radius:10px;margin-top:8px;cursor:pointer;}
+.attachment-row:active{opacity:0.7;}
 .attachment-name{font-size:13px;font-weight:600;color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .attachment-size{font-size:11px;color:var(--ink3);}
-.section-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin:20px 0 10px;}
-.field-group{background:var(--white);border-radius:14px;overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow-sm);}
-.field-row{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--sand);gap:10px;}
+.section-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin:18px 0 10px;}
+.field-group{background:var(--white);border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.field-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--sand);gap:10px;}
 .field-row:last-child{border-bottom:none;}
-.field-icon{font-size:17px;width:24px;text-align:center;flex-shrink:0;}
-.field-input{flex:1;border:none;outline:none;font-family:inherit;font-size:15px;color:var(--ink);background:transparent;}
+.field-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
+.field-label{font-size:11px;color:var(--ink3);min-width:70px;flex-shrink:0;}
+.field-input{flex:1;border:none;outline:none;font-family:inherit;font-size:14px;color:var(--ink);background:transparent;min-width:0;}
 .field-input::placeholder{color:var(--ink3);}
 .type-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
 .type-chip{padding:7px 13px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--sand2);background:var(--white);cursor:pointer;color:var(--ink2);}
 .type-chip.selected{background:var(--accent);color:var(--white);border-color:var(--accent);}
-.upload-zone{border:2px dashed var(--sand3);border-radius:14px;padding:22px;text-align:center;cursor:pointer;margin-bottom:14px;}
+.upload-zone{border:2px dashed var(--sand3);border-radius:14px;padding:20px;text-align:center;cursor:pointer;margin-bottom:14px;}
 .upload-zone.drag-over{border-color:var(--accent);background:var(--accent-light);}
-.upload-icon{font-size:28px;margin-bottom:8px;}
+.upload-icon{font-size:26px;margin-bottom:6px;}
 .upload-text{font-size:14px;font-weight:600;color:var(--ink2);}
 .upload-hint{font-size:12px;color:var(--ink3);margin-top:3px;}
-.uploaded-files{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
-.uf-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:10px;padding:10px 14px;box-shadow:var(--shadow-sm);}
-.uf-name{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.uf-size{font-size:11px;color:var(--ink3);}
 .ai-parse-box{background:var(--white);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow-sm);}
 .ai-parse-label{font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.5;}
 .ai-textarea{width:100%;border:1.5px solid var(--sand2);border-radius:10px;padding:12px;font-family:inherit;font-size:13px;color:var(--ink);background:var(--sand);resize:none;outline:none;min-height:80px;}
@@ -144,16 +146,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
 .dot-pulse span:nth-child(2){animation-delay:0.2s;}
 .dot-pulse span:nth-child(3){animation-delay:0.4s;}
 @keyframes dp{0%,80%,100%{transform:scale(0.6);opacity:0.4}40%{transform:scale(1);opacity:1}}
-.parse-result{display:none;margin-top:12px;padding:12px;background:var(--accent-light);border-radius:10px;font-size:13px;color:var(--ink2);line-height:1.6;border-left:3px solid var(--accent);}
+.parse-result{display:none;margin-top:12px;padding:12px;background:var(--accent-light);border-radius:10px;font-size:13px;color:var(--ink2);line-height:1.6;}
 .save-btn{background:var(--accent);color:var(--white);border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:600;width:100%;margin:10px 0 40px;cursor:pointer;font-family:inherit;}
-.notif-banner{position:fixed;top:0;left:50%;width:100%;max-width:390px;background:var(--ink);color:var(--white);border-radius:0 0 20px 20px;padding:16px 20px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,0.2);-webkit-transform:translateX(-50%) translateY(-110%);transform:translateX(-50%) translateY(-110%);-webkit-transition:-webkit-transform 0.4s;transition:transform 0.4s;}
+.notif-banner{position:fixed;top:0;left:50%;width:100%;max-width:390px;background:var(--ink);color:var(--sand);border-radius:0 0 20px 20px;padding:16px 20px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,0.2);-webkit-transform:translateX(-50%) translateY(-110%);transform:translateX(-50%) translateY(-110%);-webkit-transition:-webkit-transform 0.4s;transition:transform 0.4s;}
 .notif-banner.show{-webkit-transform:translateX(-50%) translateY(0);transform:translateX(-50%) translateY(0);}
 .notif-inner{display:flex;align-items:flex-start;gap:12px;}
 .notif-app-icon{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .notif-body{flex:1;}
 .notif-title{font-size:13px;font-weight:600;margin-bottom:2px;}
 .notif-message{font-size:12px;opacity:0.75;line-height:1.4;}
-.toast{position:fixed;bottom:110px;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--white);padding:12px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;-webkit-transition:opacity 0.3s;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:300;max-width:340px;text-align:center;}
+.toast{position:fixed;bottom:110px;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);background:var(--ink);color:var(--sand);padding:12px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;-webkit-transition:opacity 0.3s;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:300;max-width:340px;text-align:center;}
 .toast.show{opacity:1;}
 .perm-banner{background:var(--purple-light);border-radius:14px;padding:16px;margin:0 16px 16px;display:flex;align-items:flex-start;gap:12px;}
 .perm-icon{font-size:22px;flex-shrink:0;}
@@ -163,29 +165,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
 .perm-btn{margin-top:10px;background:var(--purple);color:var(--white);border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
 .icon-flight{background:#EAF3DE;}.icon-train{background:var(--sky-light);}.icon-hotel{background:var(--accent-light);}
 .icon-car{background:var(--purple-light);}.icon-activity{background:#FAECE7;}.icon-food{background:var(--warm-light);}
-.icon-bus{background:#E8EFF5;}.icon-other{background:#F0EEEC;}
-.edit-section-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin:16px 0 8px;}
-.edit-field-group{background:var(--sand);border-radius:12px;overflow:hidden;margin-bottom:4px;}
-.edit-field-row{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--sand2);gap:10px;}
-.edit-field-row:last-child{border-bottom:none;}
-.edit-field-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;color:var(--ink3);}
-.edit-field-input{flex:1;border:none;outline:none;font-family:inherit;font-size:14px;color:var(--ink);background:transparent;}
-.edit-field-input::placeholder{color:var(--ink3);}
-.edit-type-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.edit-type-chip{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--sand2);background:var(--white);cursor:pointer;color:var(--ink2);}
-.edit-type-chip.selected{background:var(--accent);color:var(--white);border-color:var(--accent);}
-.ai-update-zone{border:2px dashed var(--sand3);border-radius:12px;padding:18px;text-align:center;cursor:pointer;margin-bottom:10px;}
-.ai-update-zone:active{background:var(--accent-light);}
+.icon-bus{background:var(--sky-light);}.icon-other{background:var(--sand2);}
 .diff-box{border-radius:12px;overflow:hidden;margin:10px 0;}
 .diff-row{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;font-size:13px;}
 .diff-row.changed{background:var(--amber-light);}
 .diff-row.unchanged{background:var(--sand);opacity:0.6;}
-.diff-field{font-weight:600;color:var(--ink3);width:68px;flex-shrink:0;font-size:11px;padding-top:2px;}
+.diff-field{font-weight:600;color:var(--ink3);width:76px;flex-shrink:0;font-size:11px;padding-top:2px;}
 .diff-values{flex:1;}
 .diff-old{color:var(--red);text-decoration:line-through;font-size:12px;margin-bottom:2px;}
 .diff-new{color:var(--accent);font-weight:600;}
 .diff-same{color:var(--ink2);}
 .diff-change-badge{display:inline-block;background:#FFF0C0;color:var(--amber);font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;margin-left:8px;}
+.chat-area{flex:1;overflow-y:auto;padding:8px 16px 12px;}
+.chat-msg{margin-bottom:12px;display:flex;flex-direction:column;max-width:92%;}
+.chat-msg.user{align-items:flex-end;margin-left:auto;}
+.chat-msg.asst{align-items:flex-start;}
+.chat-bubble{padding:12px 14px;border-radius:16px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-break:break-word;}
+.chat-msg.user .chat-bubble{background:var(--accent);color:var(--white);border-bottom-right-radius:4px;}
+.chat-msg.asst .chat-bubble{background:var(--white);color:var(--ink);border-bottom-left-radius:4px;box-shadow:var(--shadow-sm);}
+.chat-input-row{padding:10px 16px 24px;display:flex;gap:8px;align-items:flex-end;background:var(--sand);flex-shrink:0;border-top:1px solid var(--sand2);}
+.chat-input{flex:1;border:1.5px solid var(--sand2);outline:none;font-family:inherit;font-size:14px;color:var(--ink);background:var(--white);border-radius:20px;padding:10px 14px;resize:none;max-height:100px;}
+.chat-send{background:var(--accent);color:var(--white);border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.chat-send:disabled{opacity:0.4;}
+.chat-typing{display:flex;align-items:center;gap:6px;padding:12px 14px;background:var(--white);border-radius:16px;border-bottom-left-radius:4px;box-shadow:var(--shadow-sm);width:fit-content;}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink3);animation:dp 1.2s infinite;}
+.chat-typing span:nth-child(2){animation-delay:0.2s;}
+.chat-typing span:nth-child(3){animation-delay:0.4s;}
+.chat-proposal{background:var(--accent-light);border:1.5px solid var(--accent);border-radius:12px;padding:14px;margin-top:10px;}
+.chat-proposal-label{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;}
+.chat-proposal-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.chat-proposal-meta{font-size:12px;color:var(--ink2);margin-bottom:10px;}
+.chat-proposal-items{font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:12px;}
+.chat-save-btn{background:var(--accent);color:var(--white);border:none;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
 </style>
 </head>
 <body>
@@ -200,11 +211,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
   </div>
 </div>
 
+<!-- HOME -->
 <div class="screen active" id="screen-home">
   <div class="header">
     <div class="header-row">
       <div><h1>Journeys</h1><p id="home-sub">No trips planned</p></div>
-      <button class="icon-btn" id="btn-add-trip">＋</button>
+      <div class="header-actions">
+        <button class="icon-btn" id="btn-add-trip">＋</button>
+      </div>
     </div>
   </div>
   <div class="scroll-area">
@@ -215,16 +229,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
     <div class="nav-item nav-active" id="nav-trips"><div class="nav-icon">🗺</div><div class="nav-label" style="color:var(--accent)">Trips</div></div>
     <div class="nav-item" id="nav-now"><div class="nav-icon">📍</div><div class="nav-label">Now</div></div>
     <div class="nav-item" id="nav-add"><div class="nav-icon">＋</div><div class="nav-label">Add</div></div>
-    <div class="nav-item" id="nav-share-home"><div class="nav-icon">🔗</div><div class="nav-label">Shared</div></div>
+    <div class="nav-item"><div class="nav-icon">🔗</div><div class="nav-label">Shared</div></div>
   </div>
 </div>
 
+<!-- TRIP DETAIL -->
 <div class="screen" id="screen-trip">
   <div class="trip-header-detail">
     <button class="back-btn" id="btn-back-trip">&#8592;</button>
     <div class="trip-title-block"><h2 id="trip-detail-name"></h2><p id="trip-detail-dates"></p></div>
     <button class="header-action-btn" id="btn-share-trip">&#8593; Share</button>
-    <button class="icon-btn" id="btn-add-item-to-trip" style="margin-left:6px;font-size:16px;">＋</button>
+    <button class="icon-btn" id="btn-add-item-to-trip" style="margin-left:4px;font-size:16px;width:36px;height:36px;">＋</button>
   </div>
   <div class="scroll-area">
     <div class="now-section">
@@ -235,23 +250,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
   </div>
 </div>
 
+<!-- ADD / EDIT TRIP -->
 <div class="screen" id="screen-add">
   <div class="header">
     <div class="header-row">
       <button class="back-btn" id="btn-back-add">&#8592;</button>
-      <h1 style="font-size:24px;margin-left:8px;">New Trip</h1>
+      <h1 style="font-size:22px;margin-left:8px;flex:1">New Trip</h1>
     </div>
   </div>
   <div class="scroll-area">
     <div style="padding:0 16px;">
       <div class="section-label">Trip Details</div>
       <div class="field-group">
-        <div class="field-row"><div class="field-icon">&#9999;&#65039;</div><input class="field-input" id="add-name" type="text" placeholder="Trip name"></div>
-        <div class="field-row"><div class="field-icon">&#128197;</div><input class="field-input" id="add-start" type="date"></div>
-        <div class="field-row"><div class="field-icon">&#128197;</div><input class="field-input" id="add-end" type="date"></div>
-        <div class="field-row"><div class="field-icon">&#127758;</div><input class="field-input" id="add-dest" type="text" placeholder="Destination / Country"></div>
+        <div class="field-row"><div class="field-icon">✏️</div><input class="field-input" id="add-name" type="text" placeholder="Trip name"></div>
+        <div class="field-row"><div class="field-icon">📅</div><input class="field-input" id="add-start" type="date"></div>
+        <div class="field-row"><div class="field-icon">📅</div><input class="field-input" id="add-end" type="date"></div>
+        <div class="field-row"><div class="field-icon">🌍</div><input class="field-input" id="add-dest" type="text" placeholder="Destination / Country"></div>
       </div>
-      <div class="section-label">Add Items</div>
+      <div class="section-label">Add Item</div>
       <div class="type-chips" id="add-type-chips">
         <div class="type-chip selected" data-type="flight">&#9992; Flight</div>
         <div class="type-chip" data-type="train">&#128644; Train</div>
@@ -261,40 +277,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
         <div class="type-chip" data-type="food">&#127836; Food</div>
         <div class="type-chip" data-type="bus">&#128652; Bus</div>
       </div>
-      <div class="field-group">
-        <div class="field-row"><div class="field-icon">&#128221;</div><input class="field-input" id="item-title" type="text" placeholder="Name / Title"></div>
-        <div class="field-row"><div class="field-icon">&#128336;</div><input class="field-input" id="item-datetime" type="datetime-local"></div>
-        <div class="field-row"><div class="field-icon">&#128205;</div><input class="field-input" id="item-location" type="text" placeholder="Location / Address"></div>
-        <div class="field-row"><div class="field-icon">#</div><input class="field-input" id="item-ref" type="text" placeholder="Reference / Booking number"></div>
-        <div class="field-row"><div class="field-icon">&#128222;</div><input class="field-input" id="item-contact" type="text" placeholder="Phone / Contact"></div>
-        <div class="field-row"><div class="field-icon">&#128172;</div><input class="field-input" id="item-notes" type="text" placeholder="Notes"></div>
-      </div>
+      <div id="add-dynamic-fields"></div>
       <div id="added-items-section" style="display:none;">
         <div class="section-label">Added (<span id="added-count">0</span>)</div>
         <div id="added-items-list"></div>
       </div>
       <button id="btn-add-item" style="width:100%;background:var(--sand2);color:var(--ink2);border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:14px;font-family:inherit;">+ Add This Item</button>
-      <div class="section-label">Attach Files</div>
-      <div class="upload-zone" id="upload-zone">
-        <div class="upload-icon">&#128206;</div>
-        <div class="upload-text">Tap to attach files</div>
-        <div class="upload-hint">Boarding passes, booking PDFs, tickets</div>
-      </div>
-      <input type="file" id="file-input" multiple accept=".pdf,.png,.jpg,.jpeg,.txt,.eml" style="display:none">
-      <div class="uploaded-files" id="uploaded-files"></div>
-      <div class="section-label">Auto-Extract from Text</div>
-      <div class="ai-parse-box">
-        <div class="ai-parse-label">Paste a confirmation email — Claude will extract the details.</div>
-        <textarea class="ai-textarea" id="paste-input" placeholder="Paste booking confirmation text here..." rows="4"></textarea>
-        <button class="ai-parse-btn" id="parse-btn">&#10022; Extract with Claude</button>
-        <div class="parse-status" id="parse-status"><div class="dot-pulse"><span></span><span></span><span></span></div><span style="margin-left:4px">Extracting...</span></div>
-        <div class="parse-result" id="parse-result"></div>
-      </div>
       <button class="save-btn" id="btn-save-trip">Save Trip</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL: ITEM DETAIL -->
 <div class="modal-overlay" id="modal-item">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -303,7 +297,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
     <div id="modal-item-details"></div>
     <div class="modal-divider"></div>
     <div id="modal-item-attachments" style="display:none;">
-      <div style="font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Attachments</div>
+      <div style="font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Attached Files</div>
       <div id="modal-attachments-list"></div>
       <div class="modal-divider"></div>
     </div>
@@ -314,6 +308,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
   </div>
 </div>
 
+<!-- MODAL: EDIT ITEM -->
 <div class="modal-overlay" id="modal-edit">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -321,44 +316,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
       <div style="font-size:19px;font-weight:700;">Edit Item</div>
       <button id="btn-close-edit" style="background:none;border:none;font-size:24px;color:var(--ink3);cursor:pointer;padding:4px;line-height:1;">&#215;</button>
     </div>
-    <div class="edit-section-label">Type</div>
-    <div class="edit-type-chips" id="edit-type-chips">
-      <div class="edit-type-chip" data-type="flight">&#9992; Flight</div>
-      <div class="edit-type-chip" data-type="train">&#128644; Train</div>
-      <div class="edit-type-chip" data-type="hotel">&#127968; Hotel</div>
-      <div class="edit-type-chip" data-type="car">&#128663; Car</div>
-      <div class="edit-type-chip" data-type="activity">&#128205; Activity</div>
-      <div class="edit-type-chip" data-type="food">&#127836; Food</div>
-      <div class="edit-type-chip" data-type="bus">&#128652; Bus</div>
+    <div class="section-label">Type</div>
+    <div class="type-chips" id="edit-type-chips">
+      <div class="type-chip" data-type="flight">&#9992; Flight</div>
+      <div class="type-chip" data-type="train">&#128644; Train</div>
+      <div class="type-chip" data-type="hotel">&#127968; Hotel</div>
+      <div class="type-chip" data-type="car">&#128663; Car</div>
+      <div class="type-chip" data-type="activity">&#128205; Activity</div>
+      <div class="type-chip" data-type="food">&#127836; Food</div>
+      <div class="type-chip" data-type="bus">&#128652; Bus</div>
     </div>
-    <div class="edit-section-label">Details</div>
-    <div class="edit-field-group">
-      <div class="edit-field-row"><div class="edit-field-icon">&#128221;</div><input class="edit-field-input" id="edit-title" type="text" placeholder="Title / Name"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128336;</div><input class="edit-field-input" id="edit-datetime" type="datetime-local"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128205;</div><input class="edit-field-input" id="edit-location" type="text" placeholder="Location / Address"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">#</div><input class="edit-field-input" id="edit-ref" type="text" placeholder="Reference / Booking number"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128222;</div><input class="edit-field-input" id="edit-contact" type="text" placeholder="Phone / Contact"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128172;</div><input class="edit-field-input" id="edit-notes" type="text" placeholder="Notes"></div>
+    <div id="edit-dynamic-fields"></div>
+    <div class="section-label">Attached Files</div>
+    <div id="edit-attachments-list" style="margin-bottom:10px"></div>
+    <div class="upload-zone" id="edit-file-zone" style="padding:14px;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:600;color:var(--ink2);">+ Attach File</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:3px;">PDF, image, text</div>
     </div>
-    <div class="edit-section-label">Auto-update from new booking info</div>
-    <div class="ai-update-zone" id="ai-update-zone">
-      <div style="font-size:22px;margin-bottom:6px;">&#10022;</div>
-      <div style="font-size:13px;font-weight:600;color:var(--ink2);">Upload new booking file</div>
-      <div style="font-size:12px;color:var(--ink3);margin-top:3px;">Claude will detect what changed</div>
-    </div>
-    <input type="file" id="ai-update-file" accept=".pdf,.png,.jpg,.jpeg,.txt,.eml" style="display:none">
-    <div style="text-align:center;font-size:12px;color:var(--ink3);margin:6px 0 8px;">or paste updated text</div>
-    <textarea class="ai-textarea" id="ai-update-text" placeholder="Paste rebooking confirmation or updated details..." rows="3" style="margin-bottom:8px;"></textarea>
-    <button class="ai-parse-btn" id="ai-update-btn">&#10022; Detect Changes with Claude</button>
-    <div class="parse-status" id="ai-update-status"><div class="dot-pulse"><span></span><span></span><span></span></div><span style="margin-left:4px">Analysing changes...</span></div>
-    <div id="diff-preview" style="display:none;margin-top:14px;">
-      <div style="font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:8px;">Proposed changes <span class="diff-change-badge" id="diff-count">0 changes</span></div>
-      <div class="diff-box" id="diff-rows"></div>
-      <div style="display:flex;gap:10px;margin-top:12px;">
-        <button id="btn-apply-diff" style="flex:1;background:var(--accent);color:var(--white);border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Apply Changes</button>
-        <button id="btn-discard-diff" style="flex:1;background:var(--sand);color:var(--ink);border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Discard</button>
-      </div>
-    </div>
+    <input type="file" id="edit-file-input" accept=".pdf,.png,.jpg,.jpeg,.txt,.eml" style="display:none">
     <div class="modal-divider"></div>
     <div style="display:flex;gap:10px;">
       <button class="btn-primary" id="btn-save-edit" style="flex:2;">Save Changes</button>
@@ -367,6 +342,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
   </div>
 </div>
 
+<!-- MODAL: ADD ITEM TO EXISTING TRIP -->
 <div class="modal-overlay" id="modal-add-to-trip">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -374,34 +350,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
       <div style="font-size:19px;font-weight:700;">Add Item</div>
       <button id="btn-close-add-to-trip" style="background:none;border:none;font-size:24px;color:var(--ink3);cursor:pointer;padding:4px;line-height:1;">&#215;</button>
     </div>
-    <div class="edit-section-label">Type</div>
-    <div class="edit-type-chips" id="att-type-chips">
-      <div class="edit-type-chip selected" data-type="flight">&#9992; Flight</div>
-      <div class="edit-type-chip" data-type="train">&#128644; Train</div>
-      <div class="edit-type-chip" data-type="hotel">&#127968; Hotel</div>
-      <div class="edit-type-chip" data-type="car">&#128663; Car</div>
-      <div class="edit-type-chip" data-type="activity">&#128205; Activity</div>
-      <div class="edit-type-chip" data-type="food">&#127836; Food</div>
-      <div class="edit-type-chip" data-type="bus">&#128652; Bus</div>
+    <div class="section-label">Type</div>
+    <div class="type-chips" id="att-type-chips">
+      <div class="type-chip selected" data-type="flight">&#9992; Flight</div>
+      <div class="type-chip" data-type="train">&#128644; Train</div>
+      <div class="type-chip" data-type="hotel">&#127968; Hotel</div>
+      <div class="type-chip" data-type="car">&#128663; Car</div>
+      <div class="type-chip" data-type="activity">&#128205; Activity</div>
+      <div class="type-chip" data-type="food">&#127836; Food</div>
+      <div class="type-chip" data-type="bus">&#128652; Bus</div>
     </div>
-    <div class="edit-section-label">Details</div>
-    <div class="edit-field-group">
-      <div class="edit-field-row"><div class="edit-field-icon">&#128221;</div><input class="edit-field-input" id="att-title" type="text" placeholder="Title / Name"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128336;</div><input class="edit-field-input" id="att-datetime" type="datetime-local"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128205;</div><input class="edit-field-input" id="att-location" type="text" placeholder="Location / Address"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">#</div><input class="edit-field-input" id="att-ref" type="text" placeholder="Reference / Booking number"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128222;</div><input class="edit-field-input" id="att-contact" type="text" placeholder="Phone / Contact"></div>
-      <div class="edit-field-row"><div class="edit-field-icon">&#128172;</div><input class="edit-field-input" id="att-notes" type="text" placeholder="Notes"></div>
-    </div>
-    <div class="edit-section-label">Or extract from text</div>
-    <textarea class="ai-textarea" id="att-paste" placeholder="Paste booking confirmation — Claude will fill the fields..." rows="3" style="margin-bottom:8px;"></textarea>
-    <button class="ai-parse-btn" id="att-parse-btn">&#10022; Extract with Claude</button>
-    <div class="parse-status" id="att-parse-status"><div class="dot-pulse"><span></span><span></span><span></span></div><span style="margin-left:4px">Extracting...</span></div>
+    <div id="att-dynamic-fields"></div>
     <div class="modal-divider"></div>
     <button class="btn-primary" id="btn-save-att">Add to Itinerary</button>
   </div>
 </div>
 
+<!-- MODAL: SHARE -->
 <div class="modal-overlay" id="modal-share">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -415,93 +380,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue'
   </div>
 </div>
 
+<!-- MODAL: FILE VIEWER -->
+<div class="modal-overlay" id="modal-file-viewer">
+  <div class="modal-sheet" style="padding:12px 12px 30px">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 8px 12px;">
+      <div id="file-viewer-name" style="font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-right:10px;"></div>
+      <button id="btn-close-file-viewer" style="background:none;border:none;font-size:24px;color:var(--ink3);cursor:pointer;padding:4px;line-height:1;">&#215;</button>
+    </div>
+    <div id="file-viewer-content" style="max-height:70vh;overflow:auto;background:var(--sand);border-radius:12px;"></div>
+    <button class="btn-outline" id="btn-download-file" style="margin-top:10px">↓ Download</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 (function() {
 'use strict';
 
-var DB_KEY = 'journeys_v3';
-var state = { trips: [], pendingItems: [], pendingFiles: [] };
+var DB_KEY = 'journeys_v5';
+var FILES_KEY = 'journeys_files_v5';
+var state = { trips: [], pendingItems: [] };
+var filesStore = {};
 var currentTripId = null;
 var editingTripId = null;
 var editingItemId = null;
 var addSelectedType = 'flight';
+var editSelectedType = 'flight';
+var attSelectedType = 'flight';
 var notifTimer = null;
 var shareText = '';
 
-function saveState() {
-  try { localStorage.setItem(DB_KEY, JSON.stringify({ trips: state.trips })); } catch(e) {}
+function save() { try { localStorage.setItem(DB_KEY, JSON.stringify({trips: state.trips})); } catch(e) {} }
+function saveFiles() { try { localStorage.setItem(FILES_KEY, JSON.stringify(filesStore)); } catch(e) { showToast('Storage full'); } }
+function load() {
+  try { var r = localStorage.getItem(DB_KEY); if (r) state.trips = JSON.parse(r).trips || []; } catch(e) {}
+  try { var f = localStorage.getItem(FILES_KEY); if (f) filesStore = JSON.parse(f) || {}; } catch(e) {}
 }
-function loadState() {
-  try {
-    var raw = localStorage.getItem(DB_KEY);
-    if (raw) { var s = JSON.parse(raw); state.trips = s.trips || []; }
-  } catch(e) { state.trips = []; }
-}
-function genId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2,5);
-}
-
-var toastTimer;
-function showToast(msg) {
-  var el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2800);
-}
-
-function showInAppNotif(title, msg) {
-  var el = document.getElementById('notif-banner');
-  document.getElementById('notif-title').textContent = title;
-  document.getElementById('notif-message').textContent = msg;
-  el.classList.add('show');
-  clearTimeout(notifTimer);
-  notifTimer = setTimeout(function(){ el.classList.remove('show'); }, 5000);
-}
-
-function renderPermBanner() {
-  var area = document.getElementById('notif-perm-area');
-  if (!area) return;
-  if (typeof Notification === 'undefined' || Notification.permission === 'granted') {
-    area.innerHTML = ''; return;
-  }
-  area.innerHTML = '<div class="perm-banner"><div class="perm-icon">&#128276;</div><div class="perm-body"><div class="perm-title">Enable Notifications</div><div class="perm-desc">Get reminders 60 and 15 minutes before each activity.</div><button class="perm-btn" id="req-notif-btn">Enable Notifications</button></div></div>';
-  var btn = document.getElementById('req-notif-btn');
-  if (btn) btn.addEventListener('click', requestNotifPermission);
-}
-function requestNotifPermission() {
-  if (typeof Notification === 'undefined') { showToast('Notifications not supported'); return; }
-  Notification.requestPermission().then(function(r) {
-    if (r === 'granted') { showToast('Notifications enabled!'); renderPermBanner(); scheduleNotifications(); }
-    else showToast('Using in-app alerts instead');
-  });
-}
-function scheduleNotifications() {
-  if (window._nts) window._nts.forEach(clearTimeout);
-  window._nts = [];
-  var now = Date.now();
-  state.trips.forEach(function(trip) {
-    if (getTripStatus(trip) === 'past') return;
-    (trip.items || []).forEach(function(item) {
-      if (!item.datetime) return;
-      var ms = new Date(item.datetime).getTime();
-      [60,15].forEach(function(mins) {
-        var delay = (ms - mins*60000) - now;
-        if (delay < 0 || delay > 7*86400000) return;
-        var tid = setTimeout(function() {
-          var body = item.title + (item.location ? ' — ' + item.location : '');
-          var label = (mins===60?'1 hour':'15 min') + ' until: ' + item.title;
-          if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-            try { new Notification(label, {body:body}); } catch(e) { showInAppNotif(label, body); }
-          } else { showInAppNotif(label, body); }
-        }, delay);
-        window._nts.push(tid);
-      });
-    });
-  });
-}
+function genId() { return Date.now().toString(36) + Math.random().toString(36).substr(2,5); }
 
 var TC = {
   flight:   {e:'✈',  label:'Flight',     cls:'icon-flight',   bg:'#2D5A3D'},
@@ -513,633 +430,487 @@ var TC = {
   bus:      {e:'🚌', label:'Bus',        cls:'icon-bus',      bg:'#3B6D8C'},
   other:    {e:'📋', label:'Other',      cls:'icon-other',    bg:'#888780'}
 };
-function tc(type) { return TC[type] || TC.other; }
+function tc(t) { return TC[t] || TC.other; }
 
-function fmtDate(d) {
-  if (!d) return '—';
-  return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+var FIELD_DEFS = {
+  title:     {icon:'📝', label:'Title',      type:'text',     ph:'Name'},
+  from:      {icon:'🛫', label:'From',       type:'text',     ph:'Origin'},
+  to:        {icon:'🛬', label:'To',         type:'text',     ph:'Destination'},
+  airline:   {icon:'✈',  label:'Airline',    type:'text',     ph:'Airline name'},
+  flightNum: {icon:'#',  label:'Flight #',   type:'text',     ph:'e.g. JAL 71'},
+  departure: {icon:'🕐', label:'Departure',  type:'datetime', ph:''},
+  arrival:   {icon:'🕐', label:'Arrival',    type:'datetime', ph:''},
+  terminal:  {icon:'🏛', label:'Terminal',   type:'text',     ph:'Terminal / Gate'},
+  seat:      {icon:'💺', label:'Seat',       type:'text',     ph:'e.g. 32A'},
+  baggage:   {icon:'🧳', label:'Baggage',    type:'text',     ph:'e.g. 1 × 23kg'},
+  ref:       {icon:'#',  label:'Booking Ref',type:'text',     ph:'PNR / Confirmation'},
+  contact:   {icon:'📞', label:'Contact',    type:'text',     ph:'Phone'},
+  notes:     {icon:'💬', label:'Notes',      type:'textarea', ph:'Notes'},
+  cost:      {icon:'💰', label:'Cost',       type:'text',     ph:'e.g. $450'},
+  operator:  {icon:'🚆', label:'Operator',   type:'text',     ph:'Rail company'},
+  trainNum:  {icon:'#',  label:'Train #',    type:'text',     ph:'Train number'},
+  carSeat:   {icon:'🚃', label:'Car / Seat', type:'text',     ph:'e.g. Car 3, Seat 8C'},
+  property:  {icon:'🏨', label:'Property',   type:'text',     ph:'Hotel name'},
+  address:   {icon:'📍', label:'Address',    type:'text',     ph:'Full address'},
+  checkIn:   {icon:'🔑', label:'Check-in',   type:'datetime', ph:''},
+  checkOut:  {icon:'🔓', label:'Check-out',  type:'datetime', ph:''},
+  roomType:  {icon:'🛏', label:'Room',       type:'text',     ph:'Room type'},
+  guests:    {icon:'👥', label:'Guests',     type:'text',     ph:'e.g. 2 adults'},
+  company:   {icon:'🏢', label:'Company',    type:'text',     ph:'Rental company'},
+  vehicle:   {icon:'🚗', label:'Vehicle',    type:'text',     ph:'e.g. Toyota Prius'},
+  pickup:    {icon:'📍', label:'Pick-up',    type:'text',     ph:'Pick-up location'},
+  pickupTime:{icon:'🕐', label:'Pick-up',    type:'datetime', ph:''},
+  dropoff:   {icon:'📍', label:'Drop-off',   type:'text',     ph:'Drop-off location'},
+  dropoffTime:{icon:'🕐',label:'Drop-off',   type:'datetime', ph:''},
+  location:  {icon:'📍', label:'Location',   type:'text',     ph:'Address'},
+  startTime: {icon:'🕐', label:'Start',      type:'datetime', ph:''},
+  duration:  {icon:'⏱', label:'Duration',    type:'text',     ph:'e.g. 90 mins'},
+  cuisine:   {icon:'🍽', label:'Cuisine',    type:'text',     ph:'Type of food'},
+  reservation:{icon:'📅',label:'Reservation',type:'text',     ph:'Time / Party size'},
+  route:     {icon:'🛣', label:'Route',      type:'text',     ph:'A → B'}
+};
+
+var TYPE_SCHEMA = {
+  flight:   ['from','to','airline','flightNum','departure','arrival','terminal','seat','baggage','ref','contact','cost','notes'],
+  train:    ['from','to','operator','trainNum','departure','arrival','carSeat','ref','contact','cost','notes'],
+  hotel:    ['property','address','checkIn','checkOut','roomType','guests','ref','contact','cost','notes'],
+  car:      ['company','vehicle','pickup','pickupTime','dropoff','dropoffTime','ref','contact','cost','notes'],
+  activity: ['title','location','startTime','duration','ref','contact','cost','notes'],
+  food:     ['title','cuisine','location','startTime','reservation','ref','contact','cost','notes'],
+  bus:      ['title','route','operator','departure','arrival','carSeat','ref','contact','cost','notes'],
+  other:    ['title','location','startTime','duration','ref','contact','notes']
+};
+
+function itemTitle(item) {
+  if (item.title) return item.title;
+  if (item.type==='hotel' && item.property) return item.property;
+  if (item.type==='car' && (item.company||item.vehicle)) return (item.vehicle||'')+(item.company?' · '+item.company:'');
+  if (item.type==='flight' && item.flightNum) return item.flightNum+(item.from&&item.to?' · '+item.from+' → '+item.to:'');
+  if (item.type==='train' && item.trainNum) return item.trainNum;
+  return tc(item.type).label;
 }
-function fmtTime(d) {
-  if (!d) return '';
-  return new Date(d).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+function itemDT(item) { return item.departure||item.checkIn||item.startTime||item.pickupTime||item.datetime||null; }
+function itemSub(item) {
+  if (item.location) return item.location;
+  if (item.address) return item.address;
+  if (item.pickup) return item.pickup;
+  if (item.from&&item.to&&item.type!=='flight') return item.from+' → '+item.to;
+  if (item.route) return item.route;
+  if (item.ref) return 'Ref: '+item.ref;
+  return '';
 }
-function fmtDT(d) {
-  if (!d) return '—';
-  var dt = new Date(d);
-  return dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' · ' + fmtTime(dt);
+
+function fmtDate(d) { if (!d) return '—'; return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function fmtTime(d) { if (!d) return ''; return new Date(d).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}); }
+function fmtDT(d) { if (!d) return '—'; return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+fmtTime(d); }
+function fmtSize(b) { if (b<1024) return b+'B'; if (b<1048576) return (b/1024).toFixed(1)+'KB'; return (b/1048576).toFixed(1)+'MB'; }
+function esc(s) { if (s==null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+var toastTimer;
+function showToast(msg) {
+  var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove('show');},2800);
 }
-function fmtSize(b) {
-  if (b < 1024) return b+'B';
-  if (b < 1048576) return (b/1024).toFixed(1)+'KB';
-  return (b/1048576).toFixed(1)+'MB';
+function showInAppNotif(title,msg) {
+  var el=document.getElementById('notif-banner');
+  document.getElementById('notif-title').textContent=title;
+  document.getElementById('notif-message').textContent=msg;
+  el.classList.add('show');
+  clearTimeout(notifTimer);notifTimer=setTimeout(function(){el.classList.remove('show');},5000);
 }
 
 function getTripStatus(trip) {
-  var now = new Date(), s = new Date(trip.startDate), e = new Date(trip.endDate);
-  e.setHours(23,59,59);
-  if (now >= s && now <= e) return 'active';
-  if (now < s) return 'upcoming';
-  return 'past';
+  var now=new Date(),s=new Date(trip.startDate),e=new Date(trip.endDate);e.setHours(23,59,59);
+  if(now>=s&&now<=e) return 'active'; if(now<s) return 'upcoming'; return 'past';
 }
 function getTripProgress(trip) {
-  var now = new Date(), s = new Date(trip.startDate), e = new Date(trip.endDate);
-  if (now < s) return 0; if (now > e) return 100;
-  return Math.min(100, Math.round(((now-s)/(e-s))*100));
+  var now=new Date(),s=new Date(trip.startDate),e=new Date(trip.endDate);
+  if(now<s)return 0;if(now>e)return 100;return Math.min(100,Math.round(((now-s)/(e-s))*100));
 }
-function getDayCount(trip) { return Math.round((new Date(trip.endDate)-new Date(trip.startDate))/86400000)+1; }
-function getCurrentDay(trip) { return Math.min(getDayCount(trip), Math.max(1, Math.round((new Date()-new Date(trip.startDate))/86400000)+1)); }
-
+function getDayCount(trip){return Math.round((new Date(trip.endDate)-new Date(trip.startDate))/86400000)+1;}
+function getCurrentDay(trip){return Math.min(getDayCount(trip),Math.max(1,Math.round((new Date()-new Date(trip.startDate))/86400000)+1));}
 function getCurrentItem(trip) {
-  if (!trip || !trip.items || !trip.items.length) return null;
-  var now = new Date();
-  var sorted = trip.items.slice().sort(function(a,b){ return new Date(a.datetime)-new Date(b.datetime); });
-  var i, item, start, end;
-  for (i=0; i<sorted.length; i++) {
-    item = sorted[i]; if (!item.datetime) continue;
-    start = new Date(item.datetime);
-    end = new Date(start.getTime() + (item.durationHrs||2)*3600000);
-    if (now >= start && now <= end) return {item:item, status:'now'};
-  }
-  for (i=0; i<sorted.length; i++) {
-    item = sorted[i]; if (!item.datetime) continue;
-    if (new Date(item.datetime) > now) return {item:item, status:'next'};
-  }
+  if(!trip||!trip.items||!trip.items.length)return null;
+  var now=new Date();
+  var sorted=trip.items.slice().sort(function(a,b){return new Date(itemDT(a))-new Date(itemDT(b));});
+  for(var i=0;i<sorted.length;i++){var item=sorted[i];var d=itemDT(item);if(!d)continue;var start=new Date(d);var endF=item.arrival||item.checkOut||item.dropoffTime||null;var end=endF?new Date(endF):new Date(start.getTime()+2*3600000);if(now>=start&&now<=end)return{item:item,status:'now'};}
+  for(var j=0;j<sorted.length;j++){var it=sorted[j];var dt=itemDT(it);if(!dt)continue;if(new Date(dt)>now)return{item:it,status:'next'};}
   return null;
 }
-function getNextItem(trip, curItem) {
-  if (!trip || !curItem) return null;
-  var sorted = trip.items.slice().sort(function(a,b){ return new Date(a.datetime)-new Date(b.datetime); });
-  var idx = -1;
-  for (var i=0; i<sorted.length; i++) { if (sorted[i].id === curItem.id) { idx=i; break; } }
-  for (var j=idx+1; j<sorted.length; j++) { if (sorted[j].datetime) return sorted[j]; }
-  return null;
+function getNextItem(trip,curItem) {
+  if(!trip||!curItem)return null;
+  var sorted=trip.items.slice().sort(function(a,b){return new Date(itemDT(a))-new Date(itemDT(b));});
+  var idx=-1;for(var i=0;i<sorted.length;i++){if(sorted[i].id===curItem.id){idx=i;break;}}
+  for(var j=idx+1;j<sorted.length;j++){if(itemDT(sorted[j]))return sorted[j];}return null;
 }
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById(id).classList.add('active');
+function showScreen(id){var s=document.querySelectorAll('.screen');for(var i=0;i<s.length;i++)s[i].classList.remove('active');document.getElementById(id).classList.add('active');}
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
+
+function renderFields(cId,pfx,type,item) {
+  var fields=TYPE_SCHEMA[type]||TYPE_SCHEMA.other;
+  var html='<div class="field-group">';
+  fields.forEach(function(key){
+    var def=FIELD_DEFS[key];if(!def)return;
+    var val=item&&item[key]?item[key]:'';
+    var fid=pfx+'-'+key;
+    html+='<div class="field-row"><div class="field-icon">'+def.icon+'</div><div class="field-label">'+def.label+'</div>';
+    if(def.type==='textarea') html+='<textarea class="field-input" id="'+fid+'" placeholder="'+def.ph+'" rows="1" style="resize:vertical;min-height:28px">'+esc(val)+'</textarea>';
+    else if(def.type==='datetime') html+='<input class="field-input" id="'+fid+'" type="datetime-local" value="'+(val||'')+'">';
+    else html+='<input class="field-input" id="'+fid+'" type="text" placeholder="'+def.ph+'" value="'+esc(val)+'">';
+    html+='</div>';
+  });
+  html+='</div>';
+  document.getElementById(cId).innerHTML=html;
 }
-function openModal(id) { document.getElementById('modal-'+id).classList.add('open'); }
-function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); }
+function readFields(pfx,type) {
+  var fields=TYPE_SCHEMA[type]||TYPE_SCHEMA.other;
+  var result={type:type};
+  fields.forEach(function(key){var el=document.getElementById(pfx+'-'+key);if(!el)return;var v=el.value!=null?el.value.trim():'';result[key]=v||null;});
+  return result;
+}
 
 function renderHome() {
-  var list = document.getElementById('trips-list');
-  var sub = document.getElementById('home-sub');
-  if (!state.trips.length) {
-    list.innerHTML = '<div class="empty-state"><div class="e-icon">🗺</div><h3>No trips yet</h3><p>Tap + to plan your first adventure</p></div>';
-    sub.textContent = 'No trips planned'; return;
+  var list=document.getElementById('trips-list');var sub=document.getElementById('home-sub');
+  if(!state.trips.length){
+    list.innerHTML='<div class="empty-state"><div class="e-icon">🗺</div><h3>No trips yet</h3><p>Tap + to plan your first adventure.</p></div>';
+    sub.textContent='No trips planned';return;
   }
-  var actCnt = state.trips.filter(function(t){return getTripStatus(t)==='active';}).length;
-  var upCnt  = state.trips.filter(function(t){return getTripStatus(t)==='upcoming';}).length;
-  sub.textContent = actCnt ? actCnt+' active · '+upCnt+' upcoming' : upCnt+' upcoming';
-  var accentMap = {active:'#2D5A3D', upcoming:'#3B6D8C', past:'#A8A29E'};
-  list.innerHTML = state.trips.map(function(trip) {
-    var status = getTripStatus(trip);
-    var items = trip.items || [];
-    var hotels = items.filter(function(i){return i.type==='hotel';}).length;
-    var prog = getTripProgress(trip);
-    var days = getDayCount(trip);
-    var curDay = getCurrentDay(trip);
-    var statusCap = status.charAt(0).toUpperCase()+status.slice(1);
-    return '<div class="trip-card" data-id="'+trip.id+'">'
-      +'<div class="trip-card-accent" style="background:'+accentMap[status]+'"></div>'
-      +'<div class="trip-inner">'
-        +'<div class="trip-card-header">'
-          +'<div><div class="trip-name">'+trip.name+'</div><div class="trip-dates">'+fmtDate(trip.startDate)+' – '+fmtDate(trip.endDate)+'</div></div>'
-          +'<span class="trip-badge badge-'+status+'">'+statusCap+'</span>'
-        +'</div>'
-        +'<div class="trip-meta">'
-          +(trip.destination ? '<div class="trip-meta-item">🌍 '+trip.destination+'</div>' : '')
-          +'<div class="trip-meta-item">📋 '+items.length+' item'+(items.length!==1?'s':'')+'</div>'
-          +(hotels ? '<div class="trip-meta-item">🏨 '+hotels+' hotel'+(hotels>1?'s':'')+'</div>' : '')
-        +'</div>'
-        +(status==='active' ? '<div class="trip-progress"><div class="progress-bar"><div class="progress-fill" style="width:'+prog+'%"></div></div><div class="progress-label">Day '+curDay+' of '+days+'</div></div>' : '')
-      +'</div>'
-    +'</div>';
+  var actCnt=state.trips.filter(function(t){return getTripStatus(t)==='active';}).length;
+  var upCnt=state.trips.filter(function(t){return getTripStatus(t)==='upcoming';}).length;
+  sub.textContent=actCnt?actCnt+' active · '+upCnt+' upcoming':(upCnt?upCnt+' upcoming':'All trips');
+  var accentMap={active:'#2D5A3D',upcoming:'#3B6D8C',past:'#A8A29E'};
+  var sorted=state.trips.slice().sort(function(a,b){var sa=getTripStatus(a),sb=getTripStatus(b);var o={active:0,upcoming:1,past:2};if(o[sa]!==o[sb])return o[sa]-o[sb];if(sa==='past')return new Date(b.startDate)-new Date(a.startDate);return new Date(a.startDate)-new Date(b.startDate);});
+  list.innerHTML=sorted.map(function(trip){
+    var status=getTripStatus(trip);var items=trip.items||[];var hotels=items.filter(function(i){return i.type==='hotel';}).length;
+    var prog=getTripProgress(trip);var days=getDayCount(trip);var curDay=getCurrentDay(trip);
+    var statusCap=status.charAt(0).toUpperCase()+status.slice(1);
+    return '<div class="trip-card" data-id="'+trip.id+'"><div class="trip-card-accent" style="background:'+accentMap[status]+'"></div><div class="trip-inner"><div class="trip-card-header"><div style="flex:1;min-width:0"><div class="trip-name">'+esc(trip.name)+'</div><div class="trip-dates">'+fmtDate(trip.startDate)+' – '+fmtDate(trip.endDate)+'</div></div><span class="trip-badge badge-'+status+'">'+statusCap+'</span></div><div class="trip-meta">'+(trip.destination?'<div class="trip-meta-item">🌍 '+esc(trip.destination)+'</div>':'')+'<div class="trip-meta-item">📋 '+items.length+' item'+(items.length!==1?'s':'')+'</div>'+(hotels?'<div class="trip-meta-item">🏨 '+hotels+'</div>':'')+'</div>'+(status==='active'?'<div class="trip-progress"><div class="progress-bar"><div class="progress-fill" style="width:'+prog+'%"></div></div><div class="progress-label">Day '+curDay+' of '+days+'</div></div>':'')+'</div></div>';
   }).join('');
-  list.querySelectorAll('.trip-card').forEach(function(card){
-    card.addEventListener('click', function(){ openTrip(this.dataset.id); });
-  });
+  var cards=list.querySelectorAll('.trip-card');
+  for(var k=0;k<cards.length;k++) cards[k].addEventListener('click',(function(id){return function(){openTrip(id);};})(cards[k].dataset.id));
 }
 
 function openTrip(id) {
-  currentTripId = id;
-  var trip = state.trips.find(function(t){ return t.id===id; });
-  if (!trip) return;
-  document.getElementById('trip-detail-name').textContent = trip.name;
-  document.getElementById('trip-detail-dates').textContent = fmtDate(trip.startDate)+' – '+fmtDate(trip.endDate)+(trip.destination?' · '+trip.destination:'');
-  renderNowCard(trip);
-  renderTimeline(trip);
-  showScreen('screen-trip');
+  currentTripId=id;
+  var trip=state.trips.find(function(t){return t.id===id;});if(!trip)return;
+  document.getElementById('trip-detail-name').textContent=trip.name;
+  document.getElementById('trip-detail-dates').textContent=fmtDate(trip.startDate)+' – '+fmtDate(trip.endDate)+(trip.destination?' · '+trip.destination:'');
+  renderNowCard(trip);renderTimeline(trip);showScreen('screen-trip');
 }
 
 function renderNowCard(trip) {
-  var nowArea = document.getElementById('now-card-area');
-  var nowLabel = document.getElementById('now-label-text');
-  var current = getCurrentItem(trip);
-  if (current) {
-    var item = current.item, status = current.status;
-    var t = tc(item.type);
-    var next = getNextItem(trip, item);
-    nowLabel.textContent = status==='now' ? '▶ Happening Now' : '▶ Up Next';
-    var det = '';
-    if (item.datetime) det += '<div class="now-detail-item"><div class="now-detail-label">'+(item.type==='hotel'?'Check-in':'Time')+'</div><div class="now-detail-val">'+fmtTime(new Date(item.datetime))+'</div></div>';
-    if (item.ref) det += '<div class="now-detail-item"><div class="now-detail-label">Ref</div><div class="now-detail-val">'+item.ref+'</div></div>';
-    if (item.location) det += '<div class="now-detail-item"><div class="now-detail-label">Location</div><div class="now-detail-val">'+item.location+'</div></div>';
-    if (item.contact) det += '<div class="now-detail-item"><div class="now-detail-label">Contact</div><div class="now-detail-val">'+item.contact+'</div></div>';
-    var nextHtml = next ? '<div class="now-next"><div><div class="now-next-label">After this</div><div class="now-next-val">'+next.title+(next.datetime?' · '+fmtTime(new Date(next.datetime)):'')+'</div></div><span style="font-size:18px;opacity:0.6">→</span></div>' : '';
-    nowArea.innerHTML = '<div class="now-card" style="background:'+t.bg+';color:#fff" data-tid="'+trip.id+'" data-iid="'+item.id+'"><div class="now-card-type">'+t.e+' '+t.label+(status==='now'?' · In Progress':'')+'</div><div class="now-card-title">'+item.title+'</div><div class="now-details">'+det+'</div>'+nextHtml+'</div>';
-    var nc = nowArea.querySelector('.now-card');
-    if (nc) nc.addEventListener('click', function(){ openItemModal(this.dataset.tid, this.dataset.iid); });
+  var nowArea=document.getElementById('now-card-area');var nowLabel=document.getElementById('now-label-text');
+  var current=getCurrentItem(trip);
+  if(current){
+    var item=current.item,status=current.status;var t=tc(item.type);var next=getNextItem(trip,item);
+    nowLabel.innerHTML=(status==='now'?'▶ Happening Now':'▶ Up Next');
+    var det='';var dt=itemDT(item);
+    if(dt) det+='<div class="now-detail-item"><div class="now-detail-label">Time</div><div class="now-detail-val">'+fmtTime(new Date(dt))+'</div></div>';
+    if(item.ref) det+='<div class="now-detail-item"><div class="now-detail-label">Ref</div><div class="now-detail-val">'+esc(item.ref)+'</div></div>';
+    var loc=item.location||item.address||item.pickup;
+    if(loc) det+='<div class="now-detail-item"><div class="now-detail-label">Location</div><div class="now-detail-val">'+esc(loc)+'</div></div>';
+    if(item.contact) det+='<div class="now-detail-item"><div class="now-detail-label">Contact</div><div class="now-detail-val">'+esc(item.contact)+'</div></div>';
+    if(item.seat) det+='<div class="now-detail-item"><div class="now-detail-label">Seat</div><div class="now-detail-val">'+esc(item.seat)+'</div></div>';
+    if(item.terminal) det+='<div class="now-detail-item"><div class="now-detail-label">Terminal</div><div class="now-detail-val">'+esc(item.terminal)+'</div></div>';
+    var nextHtml=next?'<div class="now-next"><div><div class="now-next-label">After this</div><div class="now-next-val">'+esc(itemTitle(next))+(itemDT(next)?' · '+fmtTime(new Date(itemDT(next))):'')+'</div></div><span style="font-size:18px;opacity:0.6">→</span></div>':'';
+    nowArea.innerHTML='<div class="now-card" style="background:'+t.bg+';color:#fff" data-iid="'+item.id+'"><div class="now-card-type">'+t.e+' '+t.label+(status==='now'?' · In Progress':'')+'</div><div class="now-card-title">'+esc(itemTitle(item))+'</div><div class="now-details">'+det+'</div>'+nextHtml+'</div>';
+    var nc=nowArea.querySelector('.now-card');if(nc)nc.addEventListener('click',function(){openItemModal(trip.id,this.dataset.iid);});
   } else {
-    nowLabel.textContent = '▶ Status';
-    var s = getTripStatus(trip);
-    nowArea.innerHTML = '<div class="no-current">'+(s==='past'?'✓ Trip completed':s==='upcoming'?'✈ Trip starts '+fmtDate(trip.startDate):'No more activities today')+'</div>';
+    nowLabel.textContent='▶ Status';var s=getTripStatus(trip);
+    nowArea.innerHTML='<div class="no-current">'+(s==='past'?'✓ Trip completed':s==='upcoming'?'✈ Trip starts '+fmtDate(trip.startDate):'No more activities today')+'</div>';
   }
 }
 
 function renderTimeline(trip) {
-  var tlEl = document.getElementById('timeline-content');
-  var items = (trip.items||[]).slice().sort(function(a,b){ return new Date(a.datetime)-new Date(b.datetime); });
-  if (!items.length) { tlEl.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink3);font-size:14px;">No items yet — tap + to add</div>'; return; }
-  var now = new Date();
-  var current = getCurrentItem(trip);
-  var currentId = current ? current.item.id : null;
-  var dayMap = {}, dayOrder = [];
-  items.forEach(function(item) {
-    var key = item.datetime ? new Date(item.datetime).toDateString() : '__nd__';
-    if (!dayMap[key]) { dayMap[key]=[]; dayOrder.push(key); }
-    dayMap[key].push(item);
-  });
-  tlEl.innerHTML = dayOrder.map(function(key) {
-    var d = key !== '__nd__' ? new Date(key) : null;
-    var dayLabel = d ? d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'}) : 'No Date';
-    var isToday = d && d.toDateString()===now.toDateString();
+  var tlEl=document.getElementById('timeline-content');
+  var items=(trip.items||[]).slice().sort(function(a,b){return new Date(itemDT(a))-new Date(itemDT(b));});
+  if(!items.length){tlEl.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--ink3);font-size:14px;">No items yet — tap ＋ to add</div>';return;}
+  var now=new Date();var current=getCurrentItem(trip);var currentId=current?current.item.id:null;
+  var dayMap={},dayOrder=[];
+  items.forEach(function(item){var dt=itemDT(item);var key=dt?new Date(dt).toDateString():'__nd__';if(!dayMap[key]){dayMap[key]=[];dayOrder.push(key);}dayMap[key].push(item);});
+  tlEl.innerHTML=dayOrder.map(function(key){
+    var d=key!=='__nd__'?new Date(key):null;
+    var dayLabel=d?d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'}):'No Date';
+    var isToday=d&&d.toDateString()===now.toDateString();
     return '<div class="timeline-day"><div class="timeline-day-header">'+(isToday?'Today · ':'')+dayLabel+'</div>'
-      +dayMap[key].map(function(item) {
-        var t = tc(item.type);
-        var isPast = item.datetime && new Date(item.datetime)<now && item.id!==currentId;
-        var isNow = item.id===currentId;
-        var sub = item.location || (item.ref ? 'Ref: '+item.ref : '');
-        return '<div class="tl-item'+(isPast?' past':'')+(isNow?' active-now':'')+'" data-tid="'+trip.id+'" data-iid="'+item.id+'">'
-          +'<div class="tl-icon '+t.cls+'">'+t.e+'</div>'
-          +'<div class="tl-content"><div class="tl-type">'+t.label+'</div><div class="tl-title">'+item.title+'</div>'+(sub?'<div class="tl-subtitle">'+sub+'</div>':'')+'</div>'
-          +'<div class="tl-time" style="'+(isNow?'color:var(--accent);font-weight:700':'')+'">'+( item.datetime?fmtTime(new Date(item.datetime)):'' )+(isPast?'<span class="tl-done">✓ Done</span>':'')+(isNow?'<span class="tl-now-badge">Now</span>':'')+'</div>'
-        +'</div>';
+      +dayMap[key].map(function(item){
+        var t=tc(item.type);var dt=itemDT(item);
+        var isPast=dt&&new Date(dt)<now&&item.id!==currentId;
+        var isNow=item.id===currentId;
+        var sub=itemSub(item);
+        var attachCount=(item.fileIds||[]).length;
+        return '<div class="tl-item'+(isPast?' past':'')+(isNow?' active-now':'')+'" data-iid="'+item.id+'"><div class="tl-icon '+t.cls+'">'+t.e+'</div><div class="tl-content"><div class="tl-type">'+t.label+'</div><div class="tl-title">'+esc(itemTitle(item))+'</div>'+(sub?'<div class="tl-subtitle">'+esc(sub)+'</div>':'')+'</div><div class="tl-time" style="'+(isNow?'color:var(--accent);font-weight:700':'')+'">'+( dt?fmtTime(new Date(dt)):'' )+(isPast?'<span class="tl-done">✓ Done</span>':'')+(isNow?'<span class="tl-now-badge">Now</span>':'')+(attachCount?'<span class="tl-attach-badge">📎 '+attachCount+'</span>':'')+'</div></div>';
       }).join('')
     +'</div>';
   }).join('');
-  tlEl.querySelectorAll('.tl-item').forEach(function(el){
-    el.addEventListener('click', function(){ openItemModal(this.dataset.tid, this.dataset.iid); });
-  });
+  var tlItems=tlEl.querySelectorAll('.tl-item');
+  for(var k=0;k<tlItems.length;k++) tlItems[k].addEventListener('click',(function(id){return function(){openItemModal(trip.id,id);};})(tlItems[k].dataset.iid));
 }
 
-function openItemModal(tripId, itemId) {
-  editingTripId = tripId; editingItemId = itemId;
-  var trip = state.trips.find(function(t){ return t.id===tripId; });
-  if (!trip) return;
-  var item = (trip.items||[]).find(function(i){ return i.id===itemId; });
-  if (!item) return;
-  var t = tc(item.type);
-  document.getElementById('modal-item-type').textContent = t.e+' '+t.label;
-  document.getElementById('modal-item-title').textContent = item.title;
-  var rows = '';
-  if (item.datetime) rows+='<div class="detail-row"><div class="detail-label">Date & Time</div><div class="detail-val">'+fmtDT(new Date(item.datetime))+'</div></div>';
-  if (item.location) rows+='<div class="detail-row"><div class="detail-label">Location</div><div class="detail-val">'+item.location+'</div></div>';
-  if (item.ref) rows+='<div class="detail-row"><div class="detail-label">Reference</div><div class="detail-val mono">'+item.ref+'</div></div>';
-  if (item.contact) rows+='<div class="detail-row"><div class="detail-label">Contact</div><div class="detail-val blue">'+item.contact+'</div></div>';
-  if (item.notes) rows+='<div class="detail-row"><div class="detail-label">Notes</div><div class="detail-val">'+item.notes+'</div></div>';
-  document.getElementById('modal-item-details').innerHTML = rows;
-  var attSec = document.getElementById('modal-item-attachments');
-  if (item.attachments && item.attachments.length) {
+function openItemModal(tripId,itemId) {
+  editingTripId=tripId;editingItemId=itemId;
+  var trip=state.trips.find(function(t){return t.id===tripId;});if(!trip)return;
+  var item=(trip.items||[]).find(function(i){return i.id===itemId;});if(!item)return;
+  var t=tc(item.type);
+  document.getElementById('modal-item-type').textContent=t.e+' '+t.label;
+  document.getElementById('modal-item-title').textContent=itemTitle(item);
+  var rows='';var schema=TYPE_SCHEMA[item.type]||TYPE_SCHEMA.other;
+  schema.forEach(function(key){
+    var def=FIELD_DEFS[key];if(!def)return;var val=item[key];if(!val)return;
+    var displayVal=val;var cls='';
+    if(def.type==='datetime') displayVal=fmtDT(new Date(val));
+    else if(key==='ref') cls='mono';
+    if(key==='contact'){rows+='<div class="detail-row"><div class="detail-label">'+def.label+'</div><div class="detail-val"><a href="tel:'+encodeURIComponent(val.replace(/[^\d+]/g,''))+'">'+esc(displayVal)+'</a></div></div>';return;}
+    if(key==='location'||key==='address'||key==='pickup'||key==='dropoff'){
+      rows+='<div class="detail-row"><div class="detail-label">'+def.label+'</div><div class="detail-val"><a href="https://maps.apple.com/?q='+encodeURIComponent(val)+'" target="_blank" style="color:var(--accent)">'+esc(displayVal)+' ↗</a></div></div>';return;
+    }
+    rows+='<div class="detail-row"><div class="detail-label">'+def.label+'</div><div class="detail-val '+cls+'">'+esc(displayVal)+'</div></div>';
+  });
+  if(!rows)rows='<div style="text-align:center;padding:10px;color:var(--ink3);font-size:13px">No details yet — tap Edit</div>';
+  document.getElementById('modal-item-details').innerHTML=rows;
+  var attSec=document.getElementById('modal-item-attachments');
+  var fileIds=item.fileIds||[];
+  if(fileIds.length){
     attSec.style.display='block';
-    document.getElementById('modal-attachments-list').innerHTML = item.attachments.map(function(f){
-      return '<div class="attachment-row"><span style="font-size:20px;">'+(f.name.match(/\.pdf$/i)?'📄':'🖼')+'</span><div class="attachment-name">'+f.name+'</div><div class="attachment-size">'+fmtSize(f.size)+'</div></div>';
+    document.getElementById('modal-attachments-list').innerHTML=fileIds.map(function(fid){
+      var f=filesStore[fid];if(!f)return '';
+      return '<div class="attachment-row" data-fid="'+fid+'"><span style="font-size:20px;">'+(f.name.match(/\.pdf$/i)?'📄':'🖼')+'</span><div class="attachment-name">'+esc(f.name)+'</div><div class="attachment-size">'+fmtSize(f.size)+'</div></div>';
     }).join('');
-  } else { attSec.style.display='none'; }
+    var arows=document.getElementById('modal-attachments-list').querySelectorAll('.attachment-row');
+    for(var i=0;i<arows.length;i++) arows[i].addEventListener('click',(function(fid){return function(){openFileViewer(fid);};})(arows[i].dataset.fid));
+  } else attSec.style.display='none';
   openModal('item');
 }
 
 function openEditModal() {
-  var trip = state.trips.find(function(t){ return t.id===editingTripId; });
-  if (!trip) return;
-  var item = (trip.items||[]).find(function(i){ return i.id===editingItemId; });
-  if (!item) return;
-  document.querySelectorAll('#edit-type-chips .edit-type-chip').forEach(function(c){
-    c.classList.toggle('selected', c.dataset.type===(item.type||'other'));
-  });
-  document.getElementById('edit-title').value = item.title||'';
-  document.getElementById('edit-datetime').value = item.datetime||'';
-  document.getElementById('edit-location').value = item.location||'';
-  document.getElementById('edit-ref').value = item.ref||'';
-  document.getElementById('edit-contact').value = item.contact||'';
-  document.getElementById('edit-notes').value = item.notes||'';
-  document.getElementById('ai-update-text').value = '';
-  document.getElementById('ai-update-status').style.display='none';
-  document.getElementById('diff-preview').style.display='none';
-  document.getElementById('ai-update-btn').disabled=false;
+  var trip=state.trips.find(function(t){return t.id===editingTripId;});if(!trip)return;
+  var item=(trip.items||[]).find(function(i){return i.id===editingItemId;});if(!item)return;
+  editSelectedType=item.type||'other';
+  var chips=document.querySelectorAll('#edit-type-chips .type-chip');
+  for(var i=0;i<chips.length;i++) chips[i].classList.toggle('selected',chips[i].dataset.type===editSelectedType);
+  renderFields('edit-dynamic-fields','edit',editSelectedType,item);
+  renderEditAttachments(item);
   openModal('edit');
 }
 
+function renderEditAttachments(item) {
+  var list=document.getElementById('edit-attachments-list');var fileIds=item.fileIds||[];
+  if(!fileIds.length){list.innerHTML='<div style="font-size:12px;color:var(--ink3);padding:6px 0">No files attached</div>';return;}
+  list.innerHTML=fileIds.map(function(fid){
+    var f=filesStore[fid];if(!f)return '';
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sand);border-radius:10px;margin-bottom:6px;"><span style="font-size:20px;">'+(f.name.match(/\.pdf$/i)?'📄':'🖼')+'</span><div style="flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(f.name)+'</div><button data-fid="'+fid+'" class="rm-att" style="background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:2px 6px;">×</button></div>';
+  }).join('');
+  var rmBtns=list.querySelectorAll('.rm-att');
+  for(var i=0;i<rmBtns.length;i++) rmBtns[i].addEventListener('click',(function(fid){return function(e){e.stopPropagation();detachFile(fid);};})(rmBtns[i].dataset.fid));
+}
+
+function detachFile(fid) {
+  var trip=state.trips.find(function(t){return t.id===editingTripId;});if(!trip)return;
+  var item=(trip.items||[]).find(function(i){return i.id===editingItemId;});if(!item||!item.fileIds)return;
+  item.fileIds=item.fileIds.filter(function(x){return x!==fid;});
+  var stillUsed=false;state.trips.forEach(function(t){(t.items||[]).forEach(function(it){if((it.fileIds||[]).indexOf(fid)!==-1)stillUsed=true;});});
+  if(!stillUsed){delete filesStore[fid];saveFiles();}
+  save();renderEditAttachments(item);showToast('File detached');
+}
+
 function saveItemEdit() {
-  var trip = state.trips.find(function(t){ return t.id===editingTripId; });
-  if (!trip) return;
-  var item = (trip.items||[]).find(function(i){ return i.id===editingItemId; });
-  if (!item) return;
-  var selType = document.querySelector('#edit-type-chips .edit-type-chip.selected');
-  if (selType) item.type = selType.dataset.type;
-  var titleVal = document.getElementById('edit-title').value.trim();
-  if (titleVal) item.title = titleVal;
-  item.datetime = document.getElementById('edit-datetime').value || item.datetime;
-  item.location = document.getElementById('edit-location').value.trim() || null;
-  item.ref      = document.getElementById('edit-ref').value.trim() || null;
-  item.contact  = document.getElementById('edit-contact').value.trim() || null;
-  item.notes    = document.getElementById('edit-notes').value.trim() || null;
-  item.updatedAt = Date.now();
-  saveState(); scheduleNotifications();
-  closeModal('edit');
-  var t2 = state.trips.find(function(x){ return x.id===editingTripId; });
-  if (t2) { renderNowCard(t2); renderTimeline(t2); }
-  showToast('✓ Item updated');
+  var trip=state.trips.find(function(t){return t.id===editingTripId;});if(!trip)return;
+  var item=(trip.items||[]).find(function(i){return i.id===editingItemId;});if(!item)return;
+  var selType=document.querySelector('#edit-type-chips .type-chip.selected');
+  var newType=selType?selType.dataset.type:item.type;
+  var updated=readFields('edit',newType);
+  updated.id=item.id;updated.fileIds=item.fileIds||[];updated.updatedAt=Date.now();
+  var idx=trip.items.findIndex(function(x){return x.id===item.id;});
+  if(idx!==-1)trip.items[idx]=updated;
+  save();scheduleNotifications();closeModal('edit');
+  renderNowCard(trip);renderTimeline(trip);showToast('✓ Item updated');
 }
 
 function deleteItem() {
-  if (!confirm('Delete this item?')) return;
-  var trip = state.trips.find(function(t){ return t.id===editingTripId; });
-  if (!trip) return;
-  trip.items = (trip.items||[]).filter(function(i){ return i.id!==editingItemId; });
-  saveState();
-  closeModal('edit');
-  renderNowCard(trip); renderTimeline(trip);
-  showToast('Item deleted');
+  if(!confirm('Delete this item?'))return;
+  var trip=state.trips.find(function(t){return t.id===editingTripId;});if(!trip)return;
+  var item=(trip.items||[]).find(function(i){return i.id===editingItemId;});
+  if(item&&item.fileIds){item.fileIds.forEach(function(fid){var used=false;state.trips.forEach(function(t){(t.items||[]).forEach(function(it){if(it.id!==item.id&&(it.fileIds||[]).indexOf(fid)!==-1)used=true;});});if(!used)delete filesStore[fid];});saveFiles();}
+  trip.items=(trip.items||[]).filter(function(i){return i.id!==editingItemId;});
+  save();closeModal('edit');renderNowCard(trip);renderTimeline(trip);showToast('Item deleted');
 }
 
-function handleAIUpdateFile(file) {
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    document.getElementById('ai-update-text').value = '[File: '+file.name+']\n\n'+(e.target.result||'');
-    showToast('File loaded — tap Detect Changes');
-  };
-  reader.onerror = function() { showToast('Could not read file'); };
-  reader.readAsText(file);
+function readFileAsDataURL(file) {
+  return new Promise(function(resolve,reject){var r=new FileReader();r.onload=function(e){resolve(e.target.result);};r.onerror=reject;r.readAsDataURL(file);});
+}
+function storeFile(file,dataUrl) {
+  var fid='f_'+genId();filesStore[fid]={name:file.name,size:file.size,type:file.type,data:dataUrl};saveFiles();return fid;
+}
+function attachFileToItem(file) {
+  readFileAsDataURL(file).then(function(dataUrl){
+    var fid=storeFile(file,dataUrl);
+    var trip=state.trips.find(function(t){return t.id===editingTripId;});if(!trip)return;
+    var item=(trip.items||[]).find(function(i){return i.id===editingItemId;});if(!item)return;
+    if(!item.fileIds)item.fileIds=[];item.fileIds.push(fid);save();
+    renderEditAttachments(item);showToast('✓ File attached');
+  }).catch(function(){showToast('Could not read file');});
+}
+function openFileViewer(fid) {
+  var f=filesStore[fid];if(!f){showToast('File not found');return;}
+  document.getElementById('file-viewer-name').textContent=f.name;
+  var viewer=document.getElementById('file-viewer-content');
+  if(f.type&&f.type.indexOf('image/')===0) viewer.innerHTML='<img src="'+f.data+'" style="width:100%;display:block;border-radius:12px;">';
+  else if(f.type==='application/pdf'||f.name.match(/\.pdf$/i)) viewer.innerHTML='<iframe src="'+f.data+'" style="width:100%;height:70vh;border:none;border-radius:12px;background:#fff"></iframe>';
+  else viewer.innerHTML='<div style="padding:20px;font-size:13px;color:var(--ink2);text-align:center">Preview not available. Tap download.</div>';
+  window._viewingFid=fid;openModal('file-viewer');
+}
+function downloadFile(fid) {
+  var f=filesStore[fid];if(!f)return;var a=document.createElement('a');a.href=f.data;a.download=f.name;document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
 
-function runAIUpdate() {
-  var newText = document.getElementById('ai-update-text').value.trim();
-  if (!newText) { showToast('Add new booking text or upload a file first'); return; }
-  var trip = state.trips.find(function(t){ return t.id===editingTripId; });
-  var item = trip && (trip.items||[]).find(function(i){ return i.id===editingItemId; });
-  if (!item) return;
-  var btn = document.getElementById('ai-update-btn');
-  var status = document.getElementById('ai-update-status');
-  btn.disabled=true; status.style.display='flex';
-  document.getElementById('diff-preview').style.display='none';
-  var current = JSON.stringify({type:item.type,title:item.title,datetime:item.datetime,location:item.location,ref:item.ref,contact:item.contact,notes:item.notes});
-  var prompt = 'You are updating a travel itinerary item.\nCurrent item: '+current+'\nNew booking info:\n'+newText+'\n\nReturn ONLY a JSON object with keys: type, title, datetime (ISO 8601 or null), location, ref, contact, notes. Only update fields where new info clearly provides better data. Keep existing values otherwise. Return JSON only, no explanation.';
-  fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})
-  }).then(function(r){ return r.json(); }).then(function(data) {
-    var raw = ((data.content&&data.content[0]&&data.content[0].text)||'').replace(/```json|```/g,'').trim();
-    var proposed = JSON.parse(raw);
-    status.style.display='none'; btn.disabled=false;
-    renderDiff(item, proposed);
-  }).catch(function() {
-    status.style.display='none'; btn.disabled=false;
-    showToast('Could not analyse changes — check connection');
-  });
+function resetAddScreen() {
+  state.pendingItems=[];addSelectedType='flight';
+  ['add-name','add-start','add-end','add-dest'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  var chips=document.querySelectorAll('#add-type-chips .type-chip');
+  for(var i=0;i<chips.length;i++) chips[i].classList.toggle('selected',chips[i].dataset.type==='flight');
+  renderFields('add-dynamic-fields','add-item','flight',null);renderPendingItems();
 }
-
-function renderDiff(current, proposed) {
-  var fields = [
-    {k:'type',    label:'Type'},
-    {k:'title',   label:'Title'},
-    {k:'datetime',label:'Date/Time', fmt:function(v){ return v?fmtDT(new Date(v)):null; }},
-    {k:'location',label:'Location'},
-    {k:'ref',     label:'Ref #'},
-    {k:'contact', label:'Contact'},
-    {k:'notes',   label:'Notes'}
-  ];
-  var changes = 0;
-  var rows = fields.map(function(f) {
-    var oldV = current[f.k]||null, newV = proposed[f.k]||null;
-    var dOld = f.fmt ? f.fmt(oldV) : oldV;
-    var dNew = f.fmt ? f.fmt(newV) : newV;
-    var changed = (dOld!==dNew) && newV!==null && newV!==undefined;
-    if (changed) changes++;
-    if (!oldV && !newV) return '';
-    return '<div class="diff-row '+(changed?'changed':'unchanged')+'">'
-      +'<div class="diff-field">'+f.label+'</div>'
-      +'<div class="diff-values">'+(changed&&dOld?'<div class="diff-old">'+dOld+'</div>':'')+
-      '<div class="'+(changed?'diff-new':'diff-same')+'">'+( dNew||dOld||'—' )+'</div>'
-      +'</div></div>';
+function addItem() {
+  var item=readFields('add-item',addSelectedType);
+  var hasContent=Object.keys(item).some(function(k){return k!=='type'&&item[k];});
+  if(!hasContent){showToast('Fill at least one field');return;}
+  item.id=genId();state.pendingItems.push(item);
+  renderFields('add-dynamic-fields','add-item',addSelectedType,null);renderPendingItems();
+  showToast('✓ '+tc(addSelectedType).label+' added');
+}
+function renderPendingItems() {
+  var sec=document.getElementById('added-items-section');document.getElementById('added-count').textContent=state.pendingItems.length;
+  if(!state.pendingItems.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  document.getElementById('added-items-list').innerHTML=state.pendingItems.map(function(item,idx){
+    var t=tc(item.type);var dt=itemDT(item);var sub=itemSub(item)||t.label;
+    return '<div style="background:var(--white);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-sm);"><span style="font-size:18px;">'+t.e+'</span><div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;">'+esc(itemTitle(item))+'</div><div style="font-size:12px;color:var(--ink3);">'+(dt?fmtDT(new Date(dt)):sub)+'</div></div><button data-idx="'+idx+'" class="rm-btn" style="background:none;border:none;color:var(--ink3);font-size:20px;cursor:pointer;padding:4px;line-height:1;">&#215;</button></div>';
   }).join('');
-  document.getElementById('diff-rows').innerHTML = rows || '<div style="padding:14px;font-size:13px;color:var(--ink3);">No changes detected</div>';
-  document.getElementById('diff-count').textContent = changes+' change'+(changes!==1?'s':'');
-  document.getElementById('diff-preview').style.display='block';
-  if (proposed.title) document.getElementById('edit-title').value=proposed.title;
-  if (proposed.datetime) document.getElementById('edit-datetime').value=proposed.datetime;
-  if (proposed.location) document.getElementById('edit-location').value=proposed.location;
-  if (proposed.ref) document.getElementById('edit-ref').value=proposed.ref;
-  if (proposed.contact) document.getElementById('edit-contact').value=proposed.contact;
-  if (proposed.notes) document.getElementById('edit-notes').value=proposed.notes;
-  if (proposed.type) {
-    document.querySelectorAll('#edit-type-chips .edit-type-chip').forEach(function(c){
-      c.classList.toggle('selected', c.dataset.type===proposed.type);
-    });
-  }
+  var rmBtns=document.querySelectorAll('.rm-btn');
+  for(var k=0;k<rmBtns.length;k++) rmBtns[k].addEventListener('click',(function(i){return function(){state.pendingItems.splice(i,1);renderPendingItems();};})(parseInt(rmBtns[k].dataset.idx)));
+}
+function saveTrip() {
+  var name=document.getElementById('add-name').value.trim();if(!name){showToast('Please enter a trip name');return;}
+  var trip={id:genId(),name:name,startDate:document.getElementById('add-start').value||new Date().toISOString().split('T')[0],endDate:document.getElementById('add-end').value||new Date().toISOString().split('T')[0],destination:document.getElementById('add-dest').value.trim()||null,items:state.pendingItems.slice(),createdAt:Date.now()};
+  state.trips.unshift(trip);state.pendingItems=[];save();scheduleNotifications();
+  resetAddScreen();renderHome();showScreen('screen-home');showToast('✓ "'+trip.name+'" saved!');
 }
 
 function openAddToTrip() {
-  ['att-title','att-datetime','att-location','att-ref','att-contact','att-notes','att-paste'].forEach(function(id){
-    var el = document.getElementById(id); if(el) el.value='';
-  });
-  document.querySelectorAll('#att-type-chips .edit-type-chip').forEach(function(c,i){ c.classList.toggle('selected',i===0); });
-  document.getElementById('att-parse-status').style.display='none';
-  document.getElementById('att-parse-btn').disabled=false;
-  openModal('add-to-trip');
+  attSelectedType='flight';
+  var chips=document.querySelectorAll('#att-type-chips .type-chip');
+  for(var i=0;i<chips.length;i++) chips[i].classList.toggle('selected',chips[i].dataset.type==='flight');
+  renderFields('att-dynamic-fields','att','flight',null);openModal('add-to-trip');
 }
-
-function runAttParse() {
-  var text = document.getElementById('att-paste').value.trim();
-  if (!text) { showToast('Paste booking text first'); return; }
-  var btn = document.getElementById('att-parse-btn');
-  var status = document.getElementById('att-parse-status');
-  btn.disabled=true; status.style.display='flex';
-  var prompt = 'Extract travel booking details. Return ONLY a JSON object with keys (null if missing): type (flight/train/hotel/car/activity/food/bus), title, datetime (ISO 8601), location, ref, contact, notes.\n\n'+text;
-  fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})
-  }).then(function(r){ return r.json(); }).then(function(data) {
-    var raw = ((data.content&&data.content[0]&&data.content[0].text)||'').replace(/```json|```/g,'').trim();
-    var p = JSON.parse(raw);
-    if (p.title) document.getElementById('att-title').value=p.title;
-    if (p.datetime) document.getElementById('att-datetime').value=p.datetime;
-    if (p.location) document.getElementById('att-location').value=p.location;
-    if (p.ref) document.getElementById('att-ref').value=p.ref;
-    if (p.contact) document.getElementById('att-contact').value=p.contact;
-    if (p.notes) document.getElementById('att-notes').value=p.notes;
-    if (p.type) { document.querySelectorAll('#att-type-chips .edit-type-chip').forEach(function(c){ c.classList.toggle('selected',c.dataset.type===p.type); }); }
-    status.style.display='none'; btn.disabled=false;
-    showToast('Fields filled — review and save');
-  }).catch(function() {
-    status.style.display='none'; btn.disabled=false; showToast('Extraction failed — fill manually');
-  });
-}
-
 function saveAddToTrip() {
-  var trip = state.trips.find(function(t){ return t.id===currentTripId; });
-  if (!trip) return;
-  var title = document.getElementById('att-title').value.trim();
-  if (!title) { showToast('Add a title'); return; }
-  var selType = document.querySelector('#att-type-chips .edit-type-chip.selected');
-  var item = {
-    id:genId(), type:selType?selType.dataset.type:'other', title:title,
-    datetime:document.getElementById('att-datetime').value||null,
-    location:document.getElementById('att-location').value.trim()||null,
-    ref:document.getElementById('att-ref').value.trim()||null,
-    contact:document.getElementById('att-contact').value.trim()||null,
-    notes:document.getElementById('att-notes').value.trim()||null,
-    attachments:[]
-  };
-  if (!trip.items) trip.items=[];
-  trip.items.push(item);
-  saveState(); scheduleNotifications();
-  closeModal('add-to-trip');
-  renderNowCard(trip); renderTimeline(trip);
-  showToast('✓ '+tc(item.type).label+' added');
+  var trip=state.trips.find(function(t){return t.id===currentTripId;});if(!trip)return;
+  var item=readFields('att',attSelectedType);
+  var hasContent=Object.keys(item).some(function(k){return k!=='type'&&item[k];});
+  if(!hasContent){showToast('Fill at least one field');return;}
+  item.id=genId();if(!trip.items)trip.items=[];trip.items.push(item);
+  save();scheduleNotifications();closeModal('add-to-trip');
+  renderNowCard(trip);renderTimeline(trip);showToast('✓ '+tc(item.type).label+' added');
 }
 
-function addTripItem() {
-  var title = document.getElementById('item-title').value.trim();
-  if (!title) { showToast('Add a title for this item'); return; }
-  var item = {
-    id:genId(), type:addSelectedType, title:title,
-    datetime:document.getElementById('item-datetime').value||null,
-    location:document.getElementById('item-location').value.trim()||null,
-    ref:document.getElementById('item-ref').value.trim()||null,
-    contact:document.getElementById('item-contact').value.trim()||null,
-    notes:document.getElementById('item-notes').value.trim()||null,
-    attachments:state.pendingFiles.slice()
-  };
-  state.pendingItems.push(item);
-  state.pendingFiles=[];
-  document.getElementById('uploaded-files').innerHTML='';
-  ['item-title','item-datetime','item-location','item-ref','item-contact','item-notes'].forEach(function(id){ document.getElementById(id).value=''; });
-  renderPendingItems();
-  showToast('✓ '+tc(addSelectedType).label+' added');
+function renderPermBanner() {
+  var area=document.getElementById('notif-perm-area');if(!area)return;
+  if(typeof Notification==='undefined'||Notification.permission==='granted'){area.innerHTML='';return;}
+  area.innerHTML='<div class="perm-banner"><div class="perm-icon">🔔</div><div class="perm-body"><div class="perm-title">Enable Notifications</div><div class="perm-desc">Get reminders before each activity.</div><button class="perm-btn" id="req-notif-btn">Enable</button></div></div>';
+  var btn=document.getElementById('req-notif-btn');
+  if(btn) btn.addEventListener('click',function(){Notification.requestPermission().then(function(r){if(r==='granted'){showToast('Notifications enabled!');renderPermBanner();scheduleNotifications();}else showToast('Using in-app alerts');});});
 }
-
-function renderPendingItems() {
-  var sec = document.getElementById('added-items-section');
-  document.getElementById('added-count').textContent = state.pendingItems.length;
-  if (!state.pendingItems.length) { sec.style.display='none'; return; }
-  sec.style.display='block';
-  document.getElementById('added-items-list').innerHTML = state.pendingItems.map(function(item,idx){
-    var t = tc(item.type);
-    return '<div style="background:var(--white);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-sm);">'
-      +'<span style="font-size:18px;">'+t.e+'</span>'
-      +'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:600;">'+item.title+'</div>'
-      +'<div style="font-size:12px;color:var(--ink3);">'+(item.datetime?fmtDT(new Date(item.datetime)):t.label)+'</div></div>'
-      +'<button data-idx="'+idx+'" class="rm-btn" style="background:none;border:none;color:var(--ink3);font-size:20px;cursor:pointer;padding:4px;line-height:1;">&#215;</button>'
-    +'</div>';
-  }).join('');
-  document.querySelectorAll('.rm-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){ state.pendingItems.splice(parseInt(this.dataset.idx),1); renderPendingItems(); });
-  });
-}
-
-function handleFiles(files) {
-  var zone = document.getElementById('uploaded-files');
-  Array.from(files).forEach(function(f) {
-    state.pendingFiles.push({name:f.name, size:f.size, type:f.type});
-    var row = document.createElement('div');
-    row.className = 'uf-row';
-    row.innerHTML = '<span style="font-size:20px;">'+(f.name.match(/\.pdf$/i)?'📄':'🖼')+'</span><div class="uf-name">'+f.name+'</div><div class="uf-size">'+fmtSize(f.size)+'</div>';
-    zone.appendChild(row);
-  });
-}
-
-function saveTrip() {
-  var name = document.getElementById('add-name').value.trim();
-  if (!name) { showToast('Please enter a trip name'); return; }
-  var trip = {
-    id:genId(), name:name,
-    startDate:document.getElementById('add-start').value || new Date().toISOString().split('T')[0],
-    endDate:document.getElementById('add-end').value || new Date().toISOString().split('T')[0],
-    destination:document.getElementById('add-dest').value.trim()||null,
-    items:state.pendingItems.slice(), createdAt:Date.now()
-  };
-  state.trips.unshift(trip);
-  state.pendingItems=[]; state.pendingFiles=[];
-  saveState(); scheduleNotifications();
-  ['add-name','add-start','add-end','add-dest'].forEach(function(id){ document.getElementById(id).value=''; });
-  renderPendingItems(); renderHome();
-  showScreen('screen-home');
-  showToast('✓ "'+trip.name+'" saved!');
-}
-
-function runAIParse() {
-  var text = document.getElementById('paste-input').value.trim();
-  if (!text) { showToast('Paste some booking text first'); return; }
-  var btn = document.getElementById('parse-btn');
-  var status = document.getElementById('parse-status');
-  var result = document.getElementById('parse-result');
-  btn.disabled=true; status.style.display='flex'; result.style.display='none';
-  fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
-      messages:[{role:'user',content:'Extract travel booking details from this text. List each item separately with labeled fields: Type, Name, Date & Time (ISO), Location, Reference, Contact, Notes.\n\n'+text}]})
-  }).then(function(r){ return r.json(); }).then(function(data) {
-    var txt = (data.content&&data.content[0]&&data.content[0].text)||'Could not extract.';
-    status.style.display='none'; result.style.display='block'; result.textContent=txt; btn.disabled=false;
-  }).catch(function() {
-    status.style.display='none'; btn.disabled=false; showToast('Extraction failed');
+function scheduleNotifications() {
+  if(window._nts) window._nts.forEach(clearTimeout);window._nts=[];
+  var now=Date.now();
+  state.trips.forEach(function(trip){if(getTripStatus(trip)==='past')return;
+    (trip.items||[]).forEach(function(item){var dt=itemDT(item);if(!dt)return;var ms=new Date(dt).getTime();
+      [60,15].forEach(function(mins){var delay=(ms-mins*60000)-now;if(delay<0||delay>7*86400000)return;
+        var tid=setTimeout(function(){var body=itemTitle(item)+(itemSub(item)?' — '+itemSub(item):'');var label=mins+' min until: '+itemTitle(item);if(typeof Notification!=='undefined'&&Notification.permission==='granted'){try{new Notification(label,{body:body});}catch(e){showInAppNotif(label,body);}}else showInAppNotif(label,body);},delay);
+        window._nts.push(tid);
+      });
+    });
   });
 }
 
 function shareTrip() {
-  var trip = state.trips.find(function(t){ return t.id===currentTripId; });
-  if (!trip) return;
-  document.getElementById('share-modal-title').textContent = trip.name;
-  var items = (trip.items||[]).slice().sort(function(a,b){ return new Date(a.datetime)-new Date(b.datetime); });
-  var t = '✈ '+trip.name+'\n'+fmtDate(trip.startDate)+' – '+fmtDate(trip.endDate);
-  if (trip.destination) t += '\n📍 '+trip.destination;
-  t += '\n\n';
-  items.forEach(function(item) {
-    var cfg = tc(item.type);
-    t += cfg.e+' '+item.title;
-    if (item.datetime) t += '\n   📅 '+fmtDT(new Date(item.datetime));
-    if (item.location) t += '\n   📍 '+item.location;
-    if (item.ref) t += '\n   # '+item.ref;
-    if (item.contact) t += '\n   📞 '+item.contact;
-    if (item.notes) t += '\n   💬 '+item.notes;
-    t += '\n\n';
-  });
-  shareText = t.trim();
-  document.getElementById('share-modal-body').textContent = shareText;
-  openModal('share');
+  var trip=state.trips.find(function(t){return t.id===currentTripId;});if(!trip)return;
+  document.getElementById('share-modal-title').textContent=trip.name;
+  var items=(trip.items||[]).slice().sort(function(a,b){return new Date(itemDT(a))-new Date(itemDT(b));});
+  var t='✈ '+trip.name+'\n'+fmtDate(trip.startDate)+' – '+fmtDate(trip.endDate);
+  if(trip.destination) t+='\n📍 '+trip.destination; t+='\n\n';
+  items.forEach(function(item){var cfg=tc(item.type);t+=cfg.e+' '+itemTitle(item);var dt=itemDT(item);if(dt)t+='\n   📅 '+fmtDT(new Date(dt));var schema=TYPE_SCHEMA[item.type]||TYPE_SCHEMA.other;schema.forEach(function(k){if(['departure','checkIn','startTime','pickupTime','title','property'].indexOf(k)!==-1)return;if(!item[k])return;var def=FIELD_DEFS[k];if(!def)return;t+='\n   '+def.icon+' '+def.label+': '+(def.type==='datetime'?fmtDT(new Date(item[k])):item[k]);});t+='\n\n';});
+  shareText=t.trim();document.getElementById('share-modal-body').textContent=shareText;openModal('share');
+}
+
+function wire() {
+  document.getElementById('btn-add-trip').addEventListener('click',function(){resetAddScreen();showScreen('screen-add');});
+  document.getElementById('nav-trips').addEventListener('click',function(){showScreen('screen-home');renderHome();});
+  document.getElementById('nav-now').addEventListener('click',function(){var active=state.trips.find(function(t){return getTripStatus(t)==='active';});if(active)openTrip(active.id);else showToast('No active trips right now');});
+  document.getElementById('nav-add').addEventListener('click',function(){resetAddScreen();showScreen('screen-add');});
+  document.getElementById('btn-back-trip').addEventListener('click',function(){showScreen('screen-home');renderHome();});
+  document.getElementById('btn-back-add').addEventListener('click',function(){showScreen('screen-home');renderHome();});
+  document.getElementById('btn-share-trip').addEventListener('click',shareTrip);
+  document.getElementById('btn-add-item-to-trip').addEventListener('click',openAddToTrip);
+  document.getElementById('btn-edit-item').addEventListener('click',function(){closeModal('item');setTimeout(openEditModal,200);});
+  document.getElementById('btn-close-item').addEventListener('click',function(){closeModal('item');});
+  document.getElementById('btn-close-edit').addEventListener('click',function(){closeModal('edit');});
+  document.getElementById('btn-save-edit').addEventListener('click',saveItemEdit);
+  document.getElementById('btn-delete-item').addEventListener('click',deleteItem);
+  document.getElementById('edit-file-zone').addEventListener('click',function(){document.getElementById('edit-file-input').click();});
+  document.getElementById('edit-file-input').addEventListener('change',function(){if(this.files&&this.files[0])attachFileToItem(this.files[0]);this.value='';});
+  var editChips=document.querySelectorAll('#edit-type-chips .type-chip');
+  for(var i=0;i<editChips.length;i++) editChips[i].addEventListener('click',(function(chip){return function(){var all=document.querySelectorAll('#edit-type-chips .type-chip');for(var j=0;j<all.length;j++)all[j].classList.remove('selected');chip.classList.add('selected');editSelectedType=chip.dataset.type;var cv=readFields('edit',editSelectedType);renderFields('edit-dynamic-fields','edit',editSelectedType,cv);};})(editChips[i]));
+  document.getElementById('btn-close-add-to-trip').addEventListener('click',function(){closeModal('add-to-trip');});
+  document.getElementById('btn-save-att').addEventListener('click',saveAddToTrip);
+  var attChips=document.querySelectorAll('#att-type-chips .type-chip');
+  for(var k=0;k<attChips.length;k++) attChips[k].addEventListener('click',(function(chip){return function(){var all=document.querySelectorAll('#att-type-chips .type-chip');for(var j=0;j<all.length;j++)all[j].classList.remove('selected');chip.classList.add('selected');attSelectedType=chip.dataset.type;renderFields('att-dynamic-fields','att',attSelectedType,null);};})(attChips[k]));
+  document.getElementById('btn-copy-share').addEventListener('click',function(){if(navigator.clipboard&&shareText){navigator.clipboard.writeText(shareText).then(function(){showToast('Itinerary copied!');closeModal('share');}).catch(function(){showToast('Copied!');closeModal('share');});}else{showToast('Copied!');closeModal('share');}});
+  document.getElementById('btn-close-share').addEventListener('click',function(){closeModal('share');});
+  document.getElementById('btn-add-item').addEventListener('click',addItem);
+  document.getElementById('btn-save-trip').addEventListener('click',saveTrip);
+  var addChips=document.querySelectorAll('#add-type-chips .type-chip');
+  for(var m=0;m<addChips.length;m++) addChips[m].addEventListener('click',(function(chip){return function(){var all=document.querySelectorAll('#add-type-chips .type-chip');for(var j=0;j<all.length;j++)all[j].classList.remove('selected');chip.classList.add('selected');addSelectedType=chip.dataset.type;renderFields('add-dynamic-fields','add-item',addSelectedType,null);};})(addChips[m]));
+  var overlays=document.querySelectorAll('.modal-overlay');
+  for(var n=0;n<overlays.length;n++) overlays[n].addEventListener('click',(function(el){return function(e){if(e.target===el)el.classList.remove('open');};})(overlays[n]));
+  document.getElementById('btn-close-file-viewer').addEventListener('click',function(){closeModal('file-viewer');});
+  document.getElementById('btn-download-file').addEventListener('click',function(){if(window._viewingFid)downloadFile(window._viewingFid);});
 }
 
 function seedDemo() {
-  if (state.trips.length) return;
-  var today = new Date();
-  function fd(d){ return d.toISOString().split('T')[0]; }
-  function fdt(d,h,m){ var x=new Date(d); x.setHours(h,m,0); return x.toISOString().slice(0,16); }
-  var t0=new Date(today); t0.setDate(today.getDate()-1);
-  var t10=new Date(today); t10.setDate(today.getDate()+9);
-  var d2=new Date(today); d2.setDate(today.getDate()+1);
-  var trip = {
-    id:genId(),name:'Kyoto & Osaka',startDate:fd(t0),endDate:fd(t10),destination:'Japan',createdAt:Date.now(),
+  if(state.trips.length)return;
+  var today=new Date();
+  function fd(d){return d.toISOString().split('T')[0];}
+  function fdt(d,h,m){var x=new Date(d);x.setHours(h,m,0);return x.toISOString().slice(0,16);}
+  var t0=new Date(today);t0.setDate(today.getDate()-1);
+  var t10=new Date(today);t10.setDate(today.getDate()+9);
+  var d2=new Date(today);d2.setDate(today.getDate()+1);
+  var trip={id:genId(),name:'Kyoto & Osaka',startDate:fd(t0),endDate:fd(t10),destination:'Japan',createdAt:Date.now(),
     items:[
-      {id:genId(),type:'flight',title:'JAL 71 · SFO → KIX',datetime:fdt(t0,10,30),location:'SFO Terminal 2, Gate 63',ref:'JLPX84',notes:'Seat 32A',contact:null,attachments:[]},
-      {id:genId(),type:'train',title:'Haruka Express · KIX → Kyoto',datetime:fdt(t0,14,43),location:'Kansai Airport Station',ref:'HRK-2934-K',notes:'Car 3, Seat 8C',contact:null,attachments:[]},
-      {id:genId(),type:'hotel',title:'Kyoto Granvia',datetime:fdt(today,15,0),location:'Karasuma-Oike, Shimogyo, Kyoto',ref:'KGH-88421',notes:'Deluxe Twin, 4 nights',contact:'+81 75-344-8888',attachments:[]},
-      {id:genId(),type:'food',title:'Nishiki Market',datetime:fdt(today,17,30),location:'Nishiki-koji, Nakagyo, Kyoto',ref:null,notes:'Try matcha soft serve',contact:null,attachments:[]},
-      {id:genId(),type:'activity',title:'Fushimi Inari Shrine',datetime:fdt(d2,8,0),location:'68 Fukakusa, Fushimi, Kyoto',ref:null,notes:'Go early. 4km hike.',contact:null,attachments:[]},
-      {id:genId(),type:'activity',title:'Tea Ceremony · Urasenke',datetime:fdt(d2,14,0),location:'Urasenke Foundation, Kyoto',ref:'URASN-441',notes:'2 guests, 90 mins',contact:null,attachments:[]},
-      {id:genId(),type:'car',title:'Toyota Prius · Toyota Rent',datetime:fdt(d2,16,0),location:'Kyoto Station North Exit',ref:'TRC-KY-9021',notes:'2 days, GPS incl.',contact:'+81 75-681-0100',attachments:[]}
-    ]
-  };
-  var t1=new Date(today); t1.setDate(today.getDate()+49);
-  var t2=new Date(today); t2.setDate(today.getDate()+59);
-  var trip2 = {
-    id:genId(),name:'Lisbon & Porto',startDate:fd(t1),endDate:fd(t2),destination:'Portugal',createdAt:Date.now()-1,
+      {id:genId(),type:'flight',airline:'Japan Airlines',flightNum:'JAL 71',from:'SFO',to:'KIX',departure:fdt(t0,10,30),arrival:fdt(t0,14,30),terminal:'T2, Gate 63',seat:'32A',baggage:'1 × 23kg',ref:'JLPX84',notes:'Economy'},
+      {id:genId(),type:'train',operator:'JR West',trainNum:'Haruka Express',from:'KIX',to:'Kyoto',departure:fdt(t0,16,43),arrival:fdt(t0,17,36),carSeat:'Car 3, Seat 8C',ref:'HRK-2934-K'},
+      {id:genId(),type:'hotel',property:'Kyoto Granvia',address:'Karasuma-Oike, Shimogyo, Kyoto',checkIn:fdt(today,15,0),checkOut:fdt(new Date(today.getTime()+4*86400000),11,0),roomType:'Deluxe Twin',guests:'2 adults',ref:'KGH-88421',contact:'+81 75-344-8888'},
+      {id:genId(),type:'food',title:'Nishiki Market',cuisine:'Japanese street food',location:'Nishiki-koji, Nakagyo, Kyoto',startTime:fdt(today,17,30),notes:'Try matcha soft serve'},
+      {id:genId(),type:'activity',title:'Fushimi Inari Shrine',location:'68 Fukakusa, Fushimi, Kyoto',startTime:fdt(d2,8,0),duration:'2-3 hours',notes:'Go early. 4km hike.'},
+      {id:genId(),type:'activity',title:'Tea Ceremony',location:'Urasenke Foundation, Kyoto',startTime:fdt(d2,14,0),duration:'90 min',ref:'URASN-441',notes:'2 guests'},
+      {id:genId(),type:'car',company:'Toyota Rent-a-Car',vehicle:'Toyota Prius',pickup:'Kyoto Station North Exit',pickupTime:fdt(d2,16,0),dropoff:'Kyoto Station North Exit',dropoffTime:fdt(new Date(d2.getTime()+2*86400000),17,0),ref:'TRC-KY-9021',contact:'+81 75-681-0100'}
+    ]};
+  var t1=new Date(today);t1.setDate(today.getDate()+49);var t2=new Date(today);t2.setDate(today.getDate()+59);
+  var trip2={id:genId(),name:'Lisbon & Porto',startDate:fd(t1),endDate:fd(t2),destination:'Portugal',createdAt:Date.now()-1,
     items:[
-      {id:genId(),type:'flight',title:'TAP 237 · JFK → LIS',datetime:fdt(t1,9,0),location:'JFK Terminal 1',ref:'TAPQ92',notes:null,contact:null,attachments:[]},
-      {id:genId(),type:'hotel',title:'Bairro Alto Hotel',datetime:fdt(t1,15,0),location:'Praça Luís de Camões 2, Lisbon',ref:'BAH-3348',notes:'Junior Suite',contact:'+351 21 340 8288',attachments:[]}
-    ]
-  };
-  state.trips=[trip,trip2];
-  saveState();
+      {id:genId(),type:'flight',airline:'TAP Air Portugal',flightNum:'TAP 237',from:'JFK',to:'LIS',departure:fdt(t1,21,0),arrival:fdt(new Date(t1.getTime()+86400000),9,30),terminal:'Terminal 1',ref:'TAPQ92'},
+      {id:genId(),type:'hotel',property:'Bairro Alto Hotel',address:'Praça Luís de Camões 2, Lisbon',checkIn:fdt(new Date(t1.getTime()+86400000),15,0),checkOut:fdt(new Date(t1.getTime()+5*86400000),11,0),roomType:'Junior Suite',ref:'BAH-3348',contact:'+351 21 340 8288'}
+    ]};
+  state.trips=[trip,trip2];save();
 }
 
-// ── WIRE ALL EVENTS ──────────────────────────────────────
-document.getElementById('btn-add-trip').addEventListener('click', function(){ showScreen('screen-add'); });
-document.getElementById('nav-trips').addEventListener('click', function(){ showScreen('screen-home'); renderHome(); });
-document.getElementById('nav-now').addEventListener('click', function(){
-  var active = state.trips.find(function(t){ return getTripStatus(t)==='active'; });
-  if (active) openTrip(active.id); else showToast('No active trips right now');
-});
-document.getElementById('nav-add').addEventListener('click', function(){ showScreen('screen-add'); });
-document.getElementById('nav-share-home').addEventListener('click', function(){ showToast('Open a trip to share it'); });
-document.getElementById('btn-back-trip').addEventListener('click', function(){ showScreen('screen-home'); renderHome(); });
-document.getElementById('btn-back-add').addEventListener('click', function(){ showScreen('screen-home'); renderHome(); });
-document.getElementById('btn-share-trip').addEventListener('click', shareTrip);
-document.getElementById('btn-add-item-to-trip').addEventListener('click', openAddToTrip);
+load();seedDemo();wire();renderHome();renderPermBanner();
+setInterval(function(){if(!currentTripId)return;var trip=state.trips.find(function(t){return t.id===currentTripId;});if(trip)renderNowCard(trip);},30000);
+if(typeof Notification!=='undefined'&&Notification.permission==='granted')scheduleNotifications();
 
-document.getElementById('btn-edit-item').addEventListener('click', function(){ closeModal('item'); setTimeout(openEditModal, 200); });
-document.getElementById('btn-close-item').addEventListener('click', function(){ closeModal('item'); });
+})();
 
-document.getElementById('btn-close-edit').addEventListener('click', function(){ closeModal('edit'); });
-document.getElementById('btn-save-edit').addEventListener('click', saveItemEdit);
-document.getElementById('btn-delete-item').addEventListener('click', deleteItem);
-document.getElementById('btn-apply-diff').addEventListener('click', function(){ document.getElementById('diff-preview').style.display='none'; saveItemEdit(); });
-document.getElementById('btn-discard-diff').addEventListener('click', function(){ document.getElementById('diff-preview').style.display='none'; });
-document.getElementById('ai-update-btn').addEventListener('click', runAIUpdate);
-document.getElementById('ai-update-zone').addEventListener('click', function(){ document.getElementById('ai-update-file').click(); });
-document.getElementById('ai-update-file').addEventListener('change', function(){ if(this.files&&this.files[0]) handleAIUpdateFile(this.files[0]); this.value=''; });
-document.querySelectorAll('#edit-type-chips .edit-type-chip').forEach(function(chip){
-  chip.addEventListener('click', function(){
-    document.querySelectorAll('#edit-type-chips .edit-type-chip').forEach(function(c){ c.classList.remove('selected'); });
-    this.classList.add('selected');
-  });
-});
-
-document.getElementById('btn-close-add-to-trip').addEventListener('click', function(){ closeModal('add-to-trip'); });
-document.getElementById('btn-save-att').addEventListener('click', saveAddToTrip);
-document.getElementById('att-parse-btn').addEventListener('click', runAttParse);
-document.querySelectorAll('#att-type-chips .edit-type-chip').forEach(function(chip){
-  chip.addEventListener('click', function(){
-    document.querySelectorAll('#att-type-chips .edit-type-chip').forEach(function(c){ c.classList.remove('selected'); });
-    this.classList.add('selected');
-  });
-});
-
-document.getElementById('btn-copy-share').addEventListener('click', function(){
-  if (navigator.clipboard && shareText) {
-    navigator.clipboard.writeText(shareText).then(function(){ showToast('Itinerary copied!'); closeModal('share'); }).catch(function(){ showToast('Copied!'); closeModal('share'); });
-  } else { showToast('Copied!'); closeModal('share'); }
-});
-document.getElementById('btn-close-share').addEventListener('click', function(){ closeModal('share'); });
-
-document.getElementById('btn-add-item').addEventListener('click', addTripItem);
-document.getElementById('btn-save-trip').addEventListener('click', saveTrip);
-document.getElementById('parse-btn').addEventListener('click', runAIParse);
-document.querySelectorAll('#add-type-chips .type-chip').forEach(function(chip){
-  chip.addEventListener('click', function(){
-    document.querySelectorAll('#add-type-chips .type-chip').forEach(function(c){ c.classList.remove('selected'); });
-    this.classList.add('selected');
-    addSelectedType = this.dataset.type;
-  });
-});
-
-var uploadZone = document.getElementById('upload-zone');
-var fileInput = document.getElementById('file-input');
-uploadZone.addEventListener('click', function(){ fileInput.click(); });
-fileInput.addEventListener('change', function(){ if(this.files) handleFiles(this.files); this.value=''; });
-uploadZone.addEventListener('dragover', function(e){ e.preventDefault(); this.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', function(){ this.classList.remove('drag-over'); });
-uploadZone.addEventListener('drop', function(e){ e.preventDefault(); this.classList.remove('drag-over'); if(e.dataTransfer&&e.dataTransfer.files) handleFiles(e.dataTransfer.files); });
-
-document.querySelectorAll('.modal-overlay').forEach(function(el){
-  el.addEventListener('click', function(e){ if(e.target===el) el.classList.remove('open'); });
-});
-
-// ── INIT ─────────────────────────────────────────────────
-loadState();
-seedDemo();
-renderHome();
-renderPermBanner();
-setInterval(function(){
-  if (!currentTripId) return;
-  var trip = state.trips.find(function(t){ return t.id===currentTripId; });
-  if (trip) renderNowCard(trip);
-}, 30000);
-if (typeof Notification !== 'undefined' && Notification.permission === 'granted') scheduleNotifications();
-
-})(); // IIFE — no globals, safe on mobile Safari
 </script>
 </body>
 </html>
